@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Fianzas_Personales</string>
+    <string name="titulo_bienvenido">Bienvenido</string>
+    <string name="correo">Correo</string>
+    <string name="clave">Clave</string>
+    <string name="no_tienes_cuenta">¿No tienes cuenta?</string>
+    <string name="boton_registrarte">Registrarte</string>
+    <string name="boton_iniciarSesion">Iniciar sesion</string>
+    //Registro
+    <string name="registro">Registro</string>
+    <string name="nombre">Nombre</string>
+    <string name="confirmar_clave">Confirmar clave</string>
+    //Gestor finanzas
+    <string name="titulo_gestor_finanzas">Gestor finanzas</string>
+    <string name="titulo_bienvenido_nombre">Bienvenido: (nombre)</string>
+    //Registro de ingresos o gastos
+    <string name="cantidad">Cantidad</string>
+    <string name="categoria">Categoria(ingreso o gasto)</string>
+    <string name="fecha">Fecha</string>
+    <string name="descripcion">Descripcion</string>
+    <string name="titulo_ingresos">Ingresos</string>
+    <string name="boton_ver">Ver mas</string>
+    <string name="boton_regresar">Regresar</string>
+
+</resources>
