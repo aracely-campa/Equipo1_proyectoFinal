@@ -2,7 +2,7 @@
     <string name="app_name">Fianzas_Personales</string>
     <string name="titulo_bienvenido">Bienvenido</string>
     <string name="correo">Correo</string>
-    <string name="clave">Clave</string>
+    <string name="clave">Contraseña</string>
     <string name="no_tienes_cuenta">¿No tienes cuenta?</string>
     <string name="boton_registrarte">Registrarte</string>
     <string name="boton_iniciarSesion">Iniciar sesion</string>
@@ -21,5 +21,18 @@
     <string name="titulo_ingresos">Ingresos</string>
     <string name="boton_ver">Ver mas</string>
     <string name="boton_regresar">Regresar</string>
+    //Spinner (combobox)
+    <string name="enero">ENERO</string>
+    <string name="febrero">FEBRERO</string>
+    <string name="marzo">MARZO</string>
+    <string name="abril">ABRIL</string>
+    <string name="mayo">MAYO</string>
+    <string name="junio">JUNIO</string>
+    <string name="julio">JULIO</string>
+    <string name="agosto">AGOSTO</string>
+    <string name="septiembre">SEPTIEMBRE</string>
+    <string name="octubre">OCTUBRE</string>
+    <string name="noviembre">NOVIEMBRE</string>
+    <string name="diciembre">DICIEMBRE</string>
 
 </resources>
