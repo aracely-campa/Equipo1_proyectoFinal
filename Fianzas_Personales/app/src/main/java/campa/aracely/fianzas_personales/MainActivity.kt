@@ -6,11 +6,8 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
-    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -20,14 +17,13 @@ class MainActivity : AppCompatActivity() {
         val login: Button = findViewById(R.id.Login)
 
         graficas.setOnClickListener {
-            var intento = Intent(this, GraficasActivity::class.java)
-            this.startActivity(intento)
+            val intent = Intent(this, GraficasActivity::class.java)
+            startActivity(intent)
         }
 
-        login.setOnClickListener{
-            var intento = Intent(this, Activity_Login ::class.java)
-            this.startActivity(intento)
+        login.setOnClickListener {
+            val intent = Intent(this, Activity_Login::class.java)
+            startActivity(intent)
         }
-
     }
 }

@@ -1,30 +1,30 @@
 package campa.aracely.fianzas_personales
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
-class Activity_Login : AppCompatActivity() {
+class ActivityRegistro : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
-
-        // Ajustar el padding para la ventana
+        enableEdgeToEdge()
+        setContentView(R.layout.activity_registro)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
-        // Configurar el botón de registrar
-        val botonRegistrar = findViewById<Button>(R.id.register_button)
-        botonRegistrar.setOnClickListener {
-            val intent = Intent(this, ActivityRegistro::class.java)
-            startActivity(intent)
+        val registerButton = findViewById<Button>(R.id.register_button)
+
+        registerButton.setOnClickListener {
+
+
+            Toast.makeText(this, "Registro exitoso", Toast.LENGTH_SHORT).show()
         }
     }
 }

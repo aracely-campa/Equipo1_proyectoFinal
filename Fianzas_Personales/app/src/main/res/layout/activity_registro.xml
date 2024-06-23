@@ -10,31 +10,43 @@
     android:background="@color/azul1.1">
 
     <TextView
-        android:id="@+id/welcome_text"
+        android:id="@+id/registro_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
-        android:text="@string/titulo_bienvenido"
+        android:text="@string/titulo_registro"
         android:textColor="@color/white"
         android:textSize="24sp"
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/email_input"
+        android:id="@+id/nombre_et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:background="@drawable/edit_text_background"
-        android:hint="@string/correo"
+        android:hint="@string/nombre"
         android:padding="10dp"
         android:textColor="@color/black"
         android:textColorHint="#B0BEC5" />
 
     <EditText
-        android:id="@+id/clave_input"
+        android:id="@+id/correo_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/edit_text_background"
+        android:hint="@string/correo"
+        android:padding="10dp"
+        android:textColor="@color/black"
+        android:textColorHint="#B0BEC5" />
+    <EditText
+        android:id="@+id/clave_et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -46,27 +58,19 @@
         android:padding="10dp"
         android:textColor="@color/black"
         android:textColorHint="#B0BEC5" />
-
-    <Button
-        android:id="@+id/login_button"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/confirmarClave_et"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/button_background"
-        android:text="@string/boton_iniciarSesion"
-        android:textColor="@color/azul1.1"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/no_account_text"
-        android:layout_width="wrap_content"
-        android:layout_height="42dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="60dp"
-        android:text="@string/no_tienes_cuenta"
-        android:textColor="@color/white"
-        android:textSize="16sp" />
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/edit_text_background"
+        android:hint="@string/confirmar_clave"
+        android:inputType="textPassword"
+        android:padding="10dp"
+        android:textColor="@color/black"
+        android:textColorHint="#B0BEC5" />
 
     <Button
         android:id="@+id/register_button"
@@ -75,7 +79,8 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
         android:background="@drawable/button_background"
+        android:paddingTop="10dp"
         android:text="@string/boton_registrarte"
-        android:textColor="@color/azul1.1"
+        android:textColor="@color/azul1.0"
         android:textStyle="bold" />
 </LinearLayout>

@@ -7,7 +7,7 @@
     <string name="boton_registrarte">Registrarte</string>
     <string name="boton_iniciarSesion">Iniciar sesion</string>
     //Registro
-    <string name="registro">Registro</string>
+    <string name="titulo_registro">Registro</string>
     <string name="nombre">Nombre</string>
     <string name="confirmar_clave">Confirmar clave</string>
     //Gestor finanzas
