@@ -14,12 +14,14 @@
     <string name="titulo_gestor_finanzas">Gestor finanzas</string>
     <string name="titulo_bienvenido_nombre">Bienvenido: (nombre)</string>
     //Registro de ingresos o gastos
-    <string name="cantidad">Cantidad</string>
-    <string name="categoria">Categoria(ingreso o gasto)</string>
+    <string name="registro_ingresos">Registro ingreso/gasto</string>
+    <string name="cantidad">Cantidad $$$</string>
+    <string name="categoria">Categoria (ingreso o gasto)</string>
     <string name="fecha">Fecha</string>
     <string name="descripcion">Descripcion</string>
     <string name="titulo_ingresos">Ingresos</string>
     <string name="boton_ver">Ver mas</string>
+    <string name="boton_registrar">Registrar</string>
     <string name="boton_regresar">Regresar</string>
     //Spinner (combobox)
     <string name="enero">ENERO</string>

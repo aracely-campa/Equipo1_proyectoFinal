@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/azul1.1">
+
+    <TextView
+        android:id="@+id/tv_registro_ingreso_gasto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/registro_ingresos"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center_horizontal"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"/>
+
+    <EditText
+        android:id="@+id/ed_cantidad_ingreso_gasto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/edit_text_background"
+        android:padding="10dp"
+        android:hint="@string/cantidad"
+        android:textColor="@color/black"
+        android:textColorHint="#B0BEC5"
+        android:inputType="numberDecimal"/>
+
+    <AutoCompleteTextView
+        android:id="@+id/actv_categoria_ingreso_gasto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/edit_text_background"
+        android:padding="10dp"
+        android:hint="@string/categoria"
+        android:textColor="@color/black"
+        android:textColorHint="#B0BEC5"
+        android:inputType="none"/>
+
+    <EditText
+        android:id="@+id/ed_fecha_ingreso_gasto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/edit_text_background"
+        android:padding="10dp"
+        android:hint="@string/fecha"
+        android:textColor="@color/black"
+        android:textColorHint="#B0BEC5"
+        android:focusable="false"
+        android:clickable="true"/>
+
+    <EditText
+        android:id="@+id/ed_descripcion_ingreso"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/edit_text_background"
+        android:padding="10dp"
+        android:hint="@string/descripcion"
+        android:textColor="@color/black"
+        android:textColorHint="#B0BEC5"/>
+
+    <Button
+        android:id="@+id/btn_registrar_ingreso_gasto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/button_background"
+        android:paddingTop="10dp"
+        android:text="@string/boton_registrar"
+        android:textColor="@color/azul1.1"
+        android:textStyle="bold"/>
+
+</LinearLayout>

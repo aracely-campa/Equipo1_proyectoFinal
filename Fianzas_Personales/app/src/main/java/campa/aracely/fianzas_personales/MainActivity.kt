@@ -15,6 +15,7 @@ class MainActivity : AppCompatActivity() {
 
         val graficas: Button = findViewById(R.id.graficas)
         val login: Button = findViewById(R.id.Login)
+        val registroIngresos: Button = findViewById(R.id.registro_ingresos)
 
         graficas.setOnClickListener {
             val intent = Intent(this, GraficasActivity::class.java)
@@ -23,6 +24,11 @@ class MainActivity : AppCompatActivity() {
 
         login.setOnClickListener {
             val intent = Intent(this, Activity_Login::class.java)
+            startActivity(intent)
+        }
+
+        registroIngresos.setOnClickListener {
+            val intent = Intent(this, RegistroIngresosGastos::class.java)
             startActivity(intent)
         }
     }
