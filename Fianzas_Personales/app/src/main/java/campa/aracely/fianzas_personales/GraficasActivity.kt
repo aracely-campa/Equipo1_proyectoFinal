@@ -42,7 +42,7 @@ class GraficasActivity : AppCompatActivity() {
         spinner.onItemSelectedListener=object :AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, id: Long) {
                 val selectedItem = meses[position]
-                Toast.makeText(this@GraficasActivity, "Enjoy the movie", Toast.LENGTH_LONG).show()
+
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {

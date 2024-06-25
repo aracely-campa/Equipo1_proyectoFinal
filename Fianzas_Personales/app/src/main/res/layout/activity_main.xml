@@ -12,15 +12,29 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!-- El contenido principal aquí -->
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            tools:ignore="MissingConstraints" />
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="-101dp"
+            tools:layout_editor_absoluteY="1dp">
 
-        <!-- El contenido principal aquí -->
+            <TextView
+                android:textSize="20dp"
+                android:textColor="@color/black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginRight="20dp"
+                android:text="Finanzas personales"
+                android:textAlignment="center"
+                />
+        </androidx.appcompat.widget.Toolbar>
+
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
@@ -38,7 +52,8 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/textView"
             app:srcCompat="@drawable/img"
-            tools:layout_editor_absoluteX="0dp" />
+            tools:layout_editor_absoluteX="0dp"
+            tools:ignore="MissingConstraints" />
 
         <ImageView
             android:id="@+id/imageView3"
