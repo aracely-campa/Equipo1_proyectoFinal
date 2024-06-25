@@ -49,6 +49,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.registroIngresos -> {
                 startActivity(Intent(this, RegistroIngresosGastos::class.java))
             }
+            R.id.graficas -> {
+                startActivity(Intent(this, GraficasActivity::class.java))
+            }
         }
 
         val drawerLayout: DrawerLayout = binding.drawerLayout
