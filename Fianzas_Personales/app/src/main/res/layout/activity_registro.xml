@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".Activity_Login"
     android:orientation="vertical"
-    android:background="@color/azul1.1">
+    android:background="@color/rojo">
 
     <TextView
         android:id="@+id/registro_text"
@@ -20,67 +20,173 @@
         android:textSize="24sp"
         android:textStyle="bold" />
 
+    <TextView
+        android:id="@+id/tv_nombre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="30dp"
+        android:text="@string/nombre"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="italic" />
+
     <EditText
-        android:id="@+id/nombre_et"
+        android:id="@+id/et_nombre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="1dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:background="@drawable/edit_text_background"
-        android:hint="@string/nombre"
         android:padding="10dp"
         android:textColor="@color/black"
         android:textColorHint="#B0BEC5" />
 
+    <TextView
+        android:id="@+id/tv_apellidos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="30dp"
+        android:text="@string/apellidos"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="italic" />
+
     <EditText
-        android:id="@+id/correo_et"
+        android:id="@+id/et_apellidos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="1dp"
         android:layout_marginRight="20dp"
         android:background="@drawable/edit_text_background"
-        android:hint="@string/correo"
         android:padding="10dp"
         android:textColor="@color/black"
         android:textColorHint="#B0BEC5" />
+
+    <TextView
+        android:id="@+id/tv_correo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="30dp"
+        android:text="@string/correo"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="italic" />
+
     <EditText
-        android:id="@+id/clave_et"
+        android:id="@+id/et_correo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="1dp"
         android:layout_marginRight="20dp"
         android:background="@drawable/edit_text_background"
-        android:hint="@string/clave"
-        android:inputType="textPassword"
+        android:inputType="textEmailAddress"
         android:padding="10dp"
         android:textColor="@color/black"
         android:textColorHint="#B0BEC5" />
+
+    <TextView
+        android:id="@+id/tv_clave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="30dp"
+        android:text="@string/clave"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="italic" />
+
     <EditText
-        android:id="@+id/confirmarClave_et"
+        android:id="@+id/et_clave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="1dp"
         android:layout_marginRight="20dp"
         android:background="@drawable/edit_text_background"
-        android:hint="@string/confirmar_clave"
         android:inputType="textPassword"
         android:padding="10dp"
         android:textColor="@color/black"
         android:textColorHint="#B0BEC5" />
 
-    <Button
-        android:id="@+id/register_button"
+    <TextView
+        android:id="@+id/tv_confirmar_clave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="30dp"
+        android:text="@string/confirmar_clave"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="italic" />
+
+    <EditText
+        android:id="@+id/et_confirmar_clave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/edit_text_background"
+        android:inputType="textPassword"
+        android:padding="10dp"
+        android:textColor="@color/black"
+        android:textColorHint="#B0BEC5" />
+
+    <TextView
+        android:id="@+id/tv_fecha_nacimiento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="30dp"
+        android:text="@string/fecha_nacimiento"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="italic" />
+
+    <EditText
+        android:id="@+id/et_fecha_nacimiento"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/edit_text_background"
+        android:inputType="none"
+        android:padding="10dp"
+        android:focusable="false"
+        android:focusableInTouchMode="false"/>
+
+    <CheckBox
+        android:id="@+id/cb_terminos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
-        android:background="@drawable/button_background"
+        android:text="@string/terminos"
+        android:textColor="@color/white"
+        />
+
+    <Button
+        android:id="@+id/btn_registrar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/azul_fuerte"
         android:paddingTop="10dp"
         android:text="@string/boton_registrarte"
-        android:textColor="@color/azul1.0"
+        android:textColor="@color/white"
         android:textStyle="bold" />
 </LinearLayout>

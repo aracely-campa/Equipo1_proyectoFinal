@@ -7,9 +7,12 @@
     <string name="boton_registrarte">Registrarte</string>
     <string name="boton_iniciarSesion">Iniciar sesion</string>
     //Registro
-    <string name="titulo_registro">Registro</string>
-    <string name="nombre">Nombre</string>
-    <string name="confirmar_clave">Confirmar clave</string>
+    <string name="titulo_registro">Registrarte</string>
+    <string name="nombre">Nombre(s)</string>
+    <string name="apellidos">Apellidos</string>
+    <string name="confirmar_clave">Confirmar contraseña</string>
+    <string name="fecha_nacimiento">Fecha de nacimiento</string>
+    <string name="terminos">Acepto términos y condiciones</string>
     //Gestor finanzas
     <string name="titulo_gestor_finanzas">Gestor finanzas</string>
     <string name="titulo_bienvenido_nombre">Bienvenido: (nombre)</string>
