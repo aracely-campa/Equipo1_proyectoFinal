@@ -26,7 +26,7 @@
     <string name="boton_ver">Ver mas</string>
     <string name="boton_registrar">Registrar</string>
     <string name="boton_regresar">Regresar</string>
-    //Spinner (combobox)
+    //Spinner mes (combobox)
     <string name="enero">ENERO</string>
     <string name="febrero">FEBRERO</string>
     <string name="marzo">MARZO</string>
@@ -39,6 +39,14 @@
     <string name="octubre">OCTUBRE</string>
     <string name="noviembre">NOVIEMBRE</string>
     <string name="diciembre">DICIEMBRE</string>
+    //Spinner categoria
+    <string name="alimentos">ALIMENTOS</string>
+    <string name="facturas">FACTURAS</string>
+    <string name="compras">COMPRAS</string>
+    <string name="transportes">TRANSPORTES</string>
+    <string name="otros">OTROS</string>
+
+    //
     <string name="title_activity_side_bard">sideBardActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -46,6 +54,8 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+
+
 
     <string name="menu_home">Inicio sesion</string>
     <string name="menu_gallery">Registro</string>
