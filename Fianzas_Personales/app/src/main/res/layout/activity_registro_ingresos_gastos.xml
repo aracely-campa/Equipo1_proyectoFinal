@@ -5,40 +5,70 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/azul1.1">
+    android:background="@color/rojo">
 
     <TextView
-        android:id="@+id/tv_registro_ingreso_gasto"
+        android:id="@+id/welcome_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/registro_ingresos"
-        android:layout_marginTop="30dp"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:text="@string/registro_ingresos"
+        android:textColor="@color/white"
         android:textSize="24sp"
-        android:textStyle="bold"
-        android:textColor="@color/white"/>
+        android:textStyle="bold" />
+
+    <ImageView
+        android:layout_width="516dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/img_line"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/tv_cantidad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="30dp"
+        android:text="@string/cantidad"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="italic" />
 
     <EditText
         android:id="@+id/ed_cantidad_ingreso_gasto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="1dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:background="@drawable/edit_text_background"
         android:padding="10dp"
-        android:hint="@string/cantidad"
         android:textColor="@color/black"
         android:textColorHint="#B0BEC5"
-        android:inputType="numberDecimal"/>
+        android:inputType="numberDecimal" />
+
+    <TextView
+        android:id="@+id/tv_categoria"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="30dp"
+        android:text="@string/categoria"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="italic" />
 
     <AutoCompleteTextView
         android:id="@+id/actv_categoria_ingreso_gasto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="1dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:background="@drawable/edit_text_background"
@@ -46,37 +76,59 @@
         android:hint="@string/categoria"
         android:textColor="@color/black"
         android:textColorHint="#B0BEC5"
-        android:inputType="none"/>
+        android:inputType="none" />
+
+    <TextView
+        android:id="@+id/tv_fecha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="30dp"
+        android:text="@string/fecha"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="italic" />
 
     <EditText
         android:id="@+id/ed_fecha_ingreso_gasto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="1dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:background="@drawable/edit_text_background"
         android:padding="10dp"
-        android:hint="@string/fecha"
         android:textColor="@color/black"
         android:textColorHint="#B0BEC5"
         android:focusable="false"
-        android:clickable="true"/>
+        android:clickable="true" />
+
+    <TextView
+        android:id="@+id/tv_descripcion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="30dp"
+        android:text="@string/descripcion"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="italic" />
 
     <EditText
         android:id="@+id/ed_descripcion_ingreso"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="1dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:background="@drawable/edit_text_background"
-        android:padding="10dp"
-        android:hint="@string/descripcion"
+        android:padding="50dp"
         android:textColor="@color/black"
-        android:textColorHint="#B0BEC5"/>
+        android:textColorHint="#B0BEC5" />
 
     <Button
         android:id="@+id/btn_registrar_ingreso_gasto"
@@ -84,12 +136,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:background="@drawable/button_background"
+        android:backgroundTint="@color/azul_claro"
         android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:text="@string/boton_registrar"
-        android:textColor="@color/azul1.1"
-        android:textStyle="bold"/>
-
+        android:textColor="@color/white"
+        android:textStyle="bold" />
 </LinearLayout>

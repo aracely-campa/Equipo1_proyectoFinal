@@ -17,8 +17,13 @@
         android:layout_marginTop="30dp"
         android:text="@string/titulo_registro"
         android:textColor="@color/white"
-        android:textSize="24sp"
+        android:textSize="30sp"
         android:textStyle="bold" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/img_linea"/>
 
     <TextView
         android:id="@+id/tv_nombre"
@@ -184,7 +189,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
-        android:backgroundTint="@color/azul_fuerte"
+        android:backgroundTint="@color/azul_claro"
         android:paddingTop="10dp"
         android:text="@string/boton_registrarte"
         android:textColor="@color/white"
