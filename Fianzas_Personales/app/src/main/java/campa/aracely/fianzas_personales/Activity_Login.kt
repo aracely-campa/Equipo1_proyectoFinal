@@ -63,7 +63,7 @@ class Activity_Login : AppCompatActivity() {
         btnIniciarSesion.setOnClickListener {
             if (camposValidos(etCorreo, etClave)) {
                 Toast.makeText(this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, MainActivity::class.java)
+                val intent = Intent(this, ActivityInicio::class.java)
                 startActivity(intent)
             } else {
                 Toast.makeText(this, "Por favor, complete todos los campos correctamente", Toast.LENGTH_SHORT).show()

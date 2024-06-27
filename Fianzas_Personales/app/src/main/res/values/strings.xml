@@ -6,7 +6,7 @@
     <string name="no_tienes_cuenta">¿No tienes cuenta?</string>
     <string name="boton_registrarte">Registrarte</string>
     <string name="boton_iniciarSesion">Iniciar sesion</string>
-   //Inicio Sesion
+    //Inicio Sesion
     <string name="correo">Correo:</string>
     <string name="clave">Contraseña:</string>
     //Registro
@@ -57,7 +57,6 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
-
 
 
     <string name="menu_home">Inicio sesion</string>

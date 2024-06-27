@@ -136,7 +136,7 @@ class ActivityRegistro : AppCompatActivity() {
 
                 if(edad >= 18){
                     Toast.makeText(this, "Registro éxitoso", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, MainActivity::class.java)
+                    val intent = Intent(this, ActivityInicio::class.java)
                     startActivity(intent)
                 } else {
                     Toast.makeText(this, "Debe ser mayor de edad para registrarte", Toast.LENGTH_SHORT).show()
