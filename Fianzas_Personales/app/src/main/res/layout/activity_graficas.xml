@@ -64,6 +64,97 @@
             tools:layout_editor_absoluteY="201dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    <GridLayout
+        android:id="@+id/bargraphs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:columnCount="2">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Alimentos"
+            android:textAlignment="center"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"/>
+
+        <TextView
+            android:id="@+id/textoAlimentos"
+            android:layout_height="20dp"
+            android:layout_width="250dp"
+            android:text=""
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Transporte"
+            android:textAlignment="center"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"/>
+
+        <TextView
+            android:id="@+id/textoTransporte"
+            android:layout_height="20dp"
+            android:layout_width="250dp"
+            android:text=""
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Compras"
+            android:textAlignment="center"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"/>
+
+        <TextView
+            android:textAlignment="center"
+            android:id="@+id/textoCompras"
+            android:layout_height="20dp"
+            android:layout_width="250dp"
+            android:text=""
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Facturas"
+            android:textAlignment="center"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"/>
+
+        <TextView
+            android:textAlignment="center"
+            android:id="@+id/textoFacturas"
+            android:layout_height="20dp"
+            android:layout_width="250dp"
+            android:text=""
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Otros"
+            android:textAlignment="center"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"/>
+
+        <TextView
+            android:id="@+id/textoOtros"
+            android:textAlignment="center"
+            android:layout_height="20dp"
+            android:layout_width="250dp"
+            android:text=""
+            />
+
+    </GridLayout>
+    <Button
+        android:id="@+id/prueba"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Prueba" />
 
 
 </LinearLayout>

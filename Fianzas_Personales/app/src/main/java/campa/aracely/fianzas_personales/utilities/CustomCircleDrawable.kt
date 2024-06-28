@@ -6,7 +6,9 @@ import android.graphics.drawable.Drawable
 import androidx.core.content.ContextCompat
 import campa.aracely.fianzas_personales.R
 import campa.aracely.fianzas_personales.utilities.Gastos
+import kotlin.math.cos
 import kotlin.math.min
+import kotlin.math.sin
 
 class CustomCircleDrawable(context: Context, gastos: ArrayList<Gastos>) : Drawable() {
 
@@ -21,7 +23,7 @@ class CustomCircleDrawable(context: Context, gastos: ArrayList<Gastos>) : Drawab
     override fun draw(canvas: Canvas) {
         val ancho = canvas.width
         val alto = canvas.height
-        val radius = min(ancho, alto) / 2.toFloat()
+        val radius = min(ancho, alto)/2f
         val centerX = ancho / 2.toFloat()
         val centerY = alto / 2.toFloat()
 
@@ -40,19 +42,22 @@ class CustomCircleDrawable(context: Context, gastos: ArrayList<Gastos>) : Drawab
             val seccion = Paint()
             seccion.style = Paint.Style.FILL
             seccion.color = ContextCompat.getColor(context!!, gasto.color)
-            canvas.drawArc(RectF(centerX - radius, centerY - radius, centerX + radius, centerY + radius),
-                anguloInicio, anguloBarrido, true, seccion)
+            canvas.drawArc(
+                RectF(centerX - radius, centerY - radius, centerX + radius, centerY + radius),
+                anguloInicio, anguloBarrido, true, seccion
+            )
 
-            // Dibujar texto en el centro de cada sección
-            val textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-                color = ContextCompat.getColor(context!!, android.R.color.white)
-                textAlign = Paint.Align.CENTER
-                textSize = context!!.resources.getDimensionPixelSize(R.dimen.textSize).toFloat()
-            }
-            val text = "${gasto.categoria}: ${porcentaje.toInt()}%"
-            val textX = centerX + radius / 2 * Math.cos(Math.toRadians((anguloInicio + anguloBarrido / 2).toDouble())).toFloat()
-            val textY = centerY + radius / 2 * Math.sin(Math.toRadians((anguloInicio + anguloBarrido / 2).toDouble())).toFloat()
-            canvas.drawText(text, textX, textY, textPaint)
+            // Dibujar texto de la categoría en el centro de la sección
+            val textoPaint = Paint()
+            textoPaint.color = ContextCompat.getColor(context!!, R.color.white)
+            textoPaint.textSize = 30f
+            textoPaint.textAlign = Paint.Align.CENTER
+            textoPaint.isAntiAlias = true
+
+            val textAngle = Math.toRadians((anguloInicio + anguloBarrido / 2).toDouble())
+            val textX = (centerX + (radius / 2) * cos(textAngle)).toFloat()
+            val textY = (centerY + (radius / 2) * sin(textAngle)).toFloat() + 10 // Ajuste para centrar verticalmente
+            canvas.drawText(gasto.categoria, textX, textY, textoPaint)
 
             anguloInicio += anguloBarrido
         }

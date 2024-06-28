@@ -9,7 +9,9 @@ import android.view.View
 import android.widget.Adapter
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.Spinner
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
@@ -98,6 +100,11 @@ class GraficasActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     fun actualizarGrafica() {
         val total = alimentos + transporte + compras + facturas + otros
+        if (total == 0.0f) {
+            Log.e("ActualizarGrafica", "El total es cero, no se pueden calcular porcentajes")
+            return
+        }
+
         val pAlimentos: Float = (alimentos * 100 / total).toFloat()
         val pTransporte: Float = (transporte * 100 / total).toFloat()
         val pCompras: Float = (compras * 100 / total).toFloat()
@@ -108,7 +115,6 @@ class GraficasActivity : AppCompatActivity() {
         val fechaString = "$currentYear-01-01"
         val fecha = LocalDate.parse(fechaString, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
 
-
         Log.d("porcentajes", "alimentos $pAlimentos")
         Log.d("porcentajes", "transporte $pTransporte")
         Log.d("porcentajes", "compras $pCompras")
@@ -116,41 +122,17 @@ class GraficasActivity : AppCompatActivity() {
         Log.d("porcentajes", "otros $pOtros")
 
         lista.clear()
-        //Aqui se cambian los colores de como salen en las graficas, awebito lo encontre xddd
-        lista.add(Gastos("", pAlimentos, R.color.azul1_1, alimentos, "Alimentos", fecha))
-        lista.add(Gastos("", pTransporte, R.color.azul1_0, transporte, "Transporte", fecha))
-        lista.add(Gastos("", pCompras, R.color.azul1_1, compras, "Compras", fecha))
+        lista.add(Gastos("", pAlimentos, R.color.black, alimentos, "Alimentos", fecha))
+        lista.add(Gastos("", pTransporte, R.color.azul1_1, transporte, "Transporte", fecha))
+        lista.add(Gastos("", pCompras, R.color.white, compras, "Compras", fecha))
         lista.add(Gastos("", pFacturas, R.color.azul1_0, facturas, "Facturas", fecha))
-        lista.add(Gastos("", pOtros, R.color.azul1_1, otros, "Otros", fecha))
+        lista.add(Gastos("", pOtros, R.color.black, otros, "Otros", fecha))
 
         val fondo = CustomCircleDrawable(this, lista)
         graph.background = fondo
-        /*
-        graphAlimentos.background =
-            CustomBarDrawable(
-                this,
-                Gastos("", pAlimentos, R.color.azul1_1, alimentos, "Alimentos", fecha)
-            )
-        graphTransporte.background =
-            CustomBarDrawable(
-                this,
-                Gastos("", pTransporte, R.color.azul1_0, transporte, "Transporte", fecha)
-            )
-        graphCompras.background =
-            CustomBarDrawable(
-                this,
-                Gastos("", pCompras, R.color.azul1_1, compras, "Compras", fecha)
-            )
-        graphFacturas.background = CustomBarDrawable(
-            this,
-            Gastos("", pFacturas, R.color.azul1_0, facturas, "Facturas", fecha)
-        )
-        graphOtros.background =
-            CustomBarDrawable(this, Gastos("", pOtros, R.color.azul1_1, otros, "Otros", fecha))
-        graph.background = fondo
     }
-*/
-    }
+
+
     fun guardar() {
         val jsonArray = JSONArray()
         var o = 0
@@ -177,6 +159,13 @@ class GraficasActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_graficas)
 
+
+        val montoAlimentos: TextView = findViewById(R.id.textoAlimentos)
+        val montoTransporte: TextView = findViewById(R.id.textoTransporte)
+        val montoCompras: TextView = findViewById(R.id.textoCompras)
+        val montoFacturas: TextView = findViewById(R.id.textoFacturas)
+        val montoOtros: TextView = findViewById(R.id.textoOtros)
+        val prueba: Button = findViewById(R.id.prueba)
         val spinner_mes: Spinner = findViewById(R.id.spinner_mes)
         val spinner_categoria: Spinner = findViewById(R.id.spinner_categoria)
         graph = findViewById(R.id.graph)
@@ -238,13 +227,37 @@ class GraficasActivity : AppCompatActivity() {
             val gastos = ArrayList<Gastos>()
             val fondo = CustomCircleDrawable(this, gastos)
             graph.background=fondo
-
+            montoAlimentos.setText("$alimentos")
+            montoTransporte.setText("$transporte")
+            montoCompras.setText("$compras")
+            montoFacturas.setText("$facturas")
+            montoOtros.setText("$otros")
 
         }else{
             actualizarGrafica()
+            montoAlimentos.setText("$alimentos")
+            montoTransporte.setText("$transporte")
+            montoCompras.setText("$compras")
+            montoFacturas.setText("$facturas")
+            montoOtros.setText("$otros")
         }
         botonGuardar.setOnClickListener{
             guardar()
+            actualizarGrafica()
+            montoAlimentos.setText("$alimentos")
+            montoTransporte.setText("$transporte")
+            montoCompras.setText("$compras")
+            montoFacturas.setText("$facturas")
+            montoOtros.setText("$otros")
         }
+
+        prueba.setOnClickListener{
+           Gastos("",0.0f,R.color.black,compras,"Compras", LocalDate.now())
+            compras++
+            println(compras)
+            Gastos("",0.0f,R.color.black,facturas,"Facturas", LocalDate.now())
+            facturas++
+        }
+
     }
 }
