@@ -46,6 +46,10 @@ class ActivityInicio : AppCompatActivity(), NavigationView.OnNavigationItemSelec
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
             }
+            R.id.nav_ver_grafricas -> {
+                val intent = Intent(this, GraficasActivity::class.java)
+                startActivity(intent)
+            }
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true

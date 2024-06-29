@@ -12,6 +12,10 @@
             android:id="@+id/nav_ver_gastos"
             android:icon="@drawable/dot"
             android:title="Ver gastos" />
+        <item
+            android:id="@+id/nav_ver_grafricas"
+            android:icon="@drawable/dot"
+            android:title="Ver graficas" />
     </group>
 
     <item
