@@ -7,75 +7,111 @@
     android:layout_height="match_parent"
     tools:context=".Activity_Login"
     android:orientation="vertical"
-    android:background="@color/azul1.1">
+    android:background="@color/rojo">
 
     <TextView
         android:id="@+id/welcome_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
-        android:text="@string/titulo_bienvenido"
+        android:layout_marginTop="60dp"
+        android:text="@string/titulo_IniciarSesion"
         android:textColor="@color/white"
-        android:textSize="24sp"
+        android:textSize="30sp"
+        android:fontFamily="sans-serif"
         android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/email_input"
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:src="@drawable/img_linea"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="80dp"
+        >
+    </ImageView>
+
+    <TextView
+        android:id="@+id/tv_correo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="30dp"
+        android:text="@string/correo"
+        android:textColor="@color/white"
+        android:layout_marginBottom="20dp"
+        android:textSize="18sp"
+        android:textStyle="italic" />
+
+    <EditText
+        android:id="@+id/et_correo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
         android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/edit_text_background"
-        android:hint="@string/correo"
+        android:inputType="textEmailAddress"
         android:padding="10dp"
         android:textColor="@color/black"
         android:textColorHint="#B0BEC5" />
 
+    <ImageView
+        android:layout_width="516dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/img_line">
+    </ImageView>
+    <TextView
+        android:id="@+id/tv_clave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="30dp"
+        android:text="@string/clave"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:layout_marginBottom="15dp"
+        android:textStyle="italic" />
+
     <EditText
-        android:id="@+id/clave_input"
+        android:id="@+id/et_clave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="1dp"
         android:layout_marginRight="20dp"
         android:background="@drawable/edit_text_background"
-        android:hint="@string/clave"
         android:inputType="textPassword"
         android:padding="10dp"
         android:textColor="@color/black"
-        android:textColorHint="#B0BEC5" />
+        android:textColorHint="#B0BEC5"
+        android:layout_marginBottom="20dp"
+        />
+    <ImageView
+        android:layout_width="516dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/img_line">
+
+    </ImageView>
+
 
     <Button
-        android:id="@+id/login_button"
+        android:id="@+id/btn_iniciarSesion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/button_background"
+        android:layout_marginTop="80dp"
+        android:backgroundTint="@color/azul_claro"
         android:text="@string/boton_iniciarSesion"
-        android:textColor="@color/azul1.1"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/no_account_text"
-        android:layout_width="wrap_content"
-        android:layout_height="42dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="60dp"
-        android:text="@string/no_tienes_cuenta"
         android:textColor="@color/white"
-        android:textSize="16sp" />
-
-    <Button
-        android:id="@+id/register_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/button_background"
-        android:text="@string/boton_registrarte"
-        android:textColor="@color/azul1.1"
         android:textStyle="bold" />
+
+
+
+
+
 </LinearLayout>

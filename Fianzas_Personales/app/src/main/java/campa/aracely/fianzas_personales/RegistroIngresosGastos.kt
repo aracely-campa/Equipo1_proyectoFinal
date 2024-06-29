@@ -105,6 +105,7 @@ class RegistroIngresosGastos : AppCompatActivity() {
         btnRegistrar.setOnClickListener {
             // Le copie la idea a la Chely de solo mostrar un texto de aqui a que le añadamos
             // Funciones de guardado real al proyecto jijiji
+
             Toast.makeText(this, "Ingreso/Gasto registrado exitosamente", Toast.LENGTH_SHORT).show()
         }
         /** Fin btnRegistrarIngresoGasto */
