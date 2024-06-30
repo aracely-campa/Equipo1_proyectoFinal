@@ -37,6 +37,7 @@
     <string name="ingreso_gasto_registrado">Ingreso/Gasto registrado exitosamente</string>
     <string name="ingreso">Ingreso</string>
     <string name="gasto">Gasto</string>
+    <string name="btn_registro_gasto">Registrar</string>
 
     <!-- Spinner mes (combobox) -->
     <string name="enero">ENERO</string>

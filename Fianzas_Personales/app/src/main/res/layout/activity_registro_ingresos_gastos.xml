@@ -118,16 +118,15 @@
         android:id="@+id/ed_fecha_ingreso_gasto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="1dp"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="1dp"
         android:layout_marginRight="20dp"
         android:background="@drawable/edit_text_background"
+        android:inputType="none"
         android:padding="10dp"
-        android:textColor="@color/black"
-        android:textColorHint="#B0BEC5"
         android:focusable="false"
-        android:clickable="true" />
+        android:focusableInTouchMode="false"/>
+
 
     <TextView
         android:id="@+id/tv_descripcion"
@@ -159,13 +158,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:backgroundTint="@color/azul_claro"
         android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:text="@string/boton_registrar"
+        android:text="@string/btn_registro_gasto"
         android:textColor="@color/white"
         android:textStyle="bold" />
 </LinearLayout>

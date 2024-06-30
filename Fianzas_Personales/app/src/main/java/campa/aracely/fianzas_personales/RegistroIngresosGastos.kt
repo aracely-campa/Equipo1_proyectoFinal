@@ -1,6 +1,7 @@
 package campa.aracely.fianzas_personales
 
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -8,6 +9,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import campa.aracely.fianzas_personales.utilities.ActivityInicio
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -29,7 +31,6 @@ class RegistroIngresosGastos : AppCompatActivity() {
             insets
         }
 
-     
         edCantidad = findViewById(R.id.ed_cantidad_ingreso_gasto)
         etFechaRegistro = findViewById(R.id.ed_fecha_ingreso_gasto)
         actvCategoria = findViewById(R.id.ed_categoria)
@@ -89,10 +90,16 @@ class RegistroIngresosGastos : AppCompatActivity() {
         }
 
         btnRegistrar.setOnClickListener {
-
-            Toast.makeText(this, getString(R.string.ingreso_gasto_registrado), Toast.LENGTH_SHORT).show()
+            if (camposValidos()) {
+                Toast.makeText(this, getString(R.string.ingreso_gasto_registrado), Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, ActivityInicio::class.java)
+                startActivity(intent)
+            } else {
+                Toast.makeText(this, "Por favor, complete todos los campos correctamente", Toast.LENGTH_SHORT).show()
+            }
         }
     }
+
     private fun isValidDouble(text: String): Boolean {
         return try {
             text.toDouble()
@@ -106,5 +113,30 @@ class RegistroIngresosGastos : AppCompatActivity() {
         val dateFormat = "dd/MM/yyyy"
         val sdf = SimpleDateFormat(dateFormat, Locale.US)
         etFechaRegistro.setText(sdf.format(calendar.time))
+    }
+
+    private fun camposValidos(): Boolean {
+        val cantidadValida = edCantidad.text.isNotEmpty() && isValidDouble(edCantidad.text.toString())
+        val fechaValida = etFechaRegistro.text.isNotEmpty()
+        val categoriaValida = actvCategoria.text.isNotEmpty()
+        val tipoValido = tipoIngresoGasto.text.isNotEmpty()
+
+        if (!cantidadValida) {
+            edCantidad.error = "Ingrese una cantidad válida"
+        }
+
+        if (!fechaValida) {
+            etFechaRegistro.error = "La fecha de registro es obligatoria"
+        }
+
+        if (!categoriaValida) {
+            actvCategoria.error = "La categoría es obligatoria"
+        }
+
+        if (!tipoValido) {
+            tipoIngresoGasto.error = "El tipo de ingreso o gasto es obligatorio"
+        }
+
+        return cantidadValida && fechaValida && categoriaValida && tipoValido
     }
 }

@@ -15,6 +15,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import campa.aracely.fianzas_personales.utilities.ActivityInicio
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
