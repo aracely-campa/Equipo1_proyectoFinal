@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".utilities.ActivityInicio"
+    tools:context=".ActivityInicio"
     android:background="@color/rojo_fondo">
 
     <androidx.constraintlayout.widget.ConstraintLayout

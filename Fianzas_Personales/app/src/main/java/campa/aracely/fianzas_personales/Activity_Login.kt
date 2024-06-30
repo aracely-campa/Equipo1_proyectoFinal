@@ -12,7 +12,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import campa.aracely.fianzas_personales.utilities.ActivityInicio
 
 class Activity_Login : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,4 +1,4 @@
-package campa.aracely.fianzas_personales.utilities
+package campa.aracely.fianzas_personales
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,9 +7,7 @@ import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import campa.aracely.fianzas_personales.GraficasActivity
-import campa.aracely.fianzas_personales.MainActivity
-import campa.aracely.fianzas_personales.R
+import campa.aracely.fianzas_personales.utilities.Ingresos
 import com.google.android.material.navigation.NavigationView
 
 class ActivityInicio : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
