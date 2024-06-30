@@ -32,7 +32,7 @@ class GraficasActivity : AppCompatActivity() {
     var lista = ArrayList<Gastos>()
     var alimentos = 0.0F
     var transporte = 0.0F
-    var compras = 0.0F
+    var compras = 0.0F  
     var facturas = 0.0F
     var otros = 0.0F
     var data: Boolean = false

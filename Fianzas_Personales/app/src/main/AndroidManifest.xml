@@ -12,7 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Fianzas_Personales"
         tools:targetApi="31">
-
+        <activity
+            android:name=".MenuTest"
+            android:exported="true" />
         <activity
             android:name=".ActivityInicio"
             android:exported="false" />
@@ -21,7 +23,7 @@
             android:exported="false" />
         <activity
             android:name=".RegistroIngresosGastos"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".ActivityRegistro"
             android:exported="false" />
@@ -36,6 +38,7 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

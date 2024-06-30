@@ -5,6 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".Activity_Login"
     android:background="@color/rojo_fondo">
 
     <TextView
@@ -77,6 +78,7 @@
         android:padding="10dp"
         android:textColor="@color/black"
         android:textColorHint="#B0BEC5" />
+
     <TextView
         android:id="@+id/tv_tipo_gasto"
         android:layout_width="wrap_content"
@@ -102,6 +104,7 @@
         android:padding="10dp"
         android:textColor="@color/black"
         android:textColorHint="#B0BEC5" />
+
     <TextView
         android:id="@+id/tv_fecha"
         android:layout_width="wrap_content"
@@ -114,19 +117,19 @@
         android:textSize="16sp"
         android:textStyle="italic" />
 
+
     <EditText
-        android:id="@+id/ed_fecha_ingreso_gasto"
+        android:id="@+id/et_fecha_nacimiento"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="1dp"
         android:layout_marginRight="20dp"
         android:background="@drawable/edit_text_background"
-        android:inputType="none"
-        android:padding="10dp"
         android:focusable="false"
-        android:focusableInTouchMode="false"/>
-
+        android:focusableInTouchMode="false"
+        android:inputType="none"
+        android:padding="10dp" />
 
     <TextView
         android:id="@+id/tv_descripcion"
