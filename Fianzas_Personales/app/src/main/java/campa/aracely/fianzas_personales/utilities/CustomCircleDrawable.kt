@@ -1,5 +1,6 @@
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RectF
 import android.graphics.drawable.Drawable
@@ -23,7 +24,7 @@ class CustomCircleDrawable(context: Context, gastos: ArrayList<Gastos>) : Drawab
     override fun draw(canvas: Canvas) {
         val ancho = canvas.width
         val alto = canvas.height
-        val radius = min(ancho, alto)/2f
+        val radius = min(ancho, alto) / 2.5f  // Ajuste del factor para el radio
         val centerX = ancho / 2.toFloat()
         val centerY = alto / 2.toFloat()
 
@@ -33,10 +34,12 @@ class CustomCircleDrawable(context: Context, gastos: ArrayList<Gastos>) : Drawab
         fondo.color = ContextCompat.getColor(context!!, R.color.black)
         canvas.drawCircle(centerX, centerY, radius, fondo)
 
-        // Dibujar secciones de gastos
+        // Dibujar secciones de emociones
         var anguloInicio = 0.0f
         for (gasto in gastos) {
             val porcentaje = gasto.porcentaje
+            if (porcentaje == 0.0f) continue  // Saltar sección si el valor es 0
+
             val anguloBarrido = 360 * (porcentaje / 100)
 
             val seccion = Paint()
@@ -48,16 +51,18 @@ class CustomCircleDrawable(context: Context, gastos: ArrayList<Gastos>) : Drawab
             )
 
             // Dibujar texto de la categoría en el centro de la sección
-            val textoPaint = Paint()
-            textoPaint.color = ContextCompat.getColor(context!!, R.color.white)
-            textoPaint.textSize = 30f
-            textoPaint.textAlign = Paint.Align.CENTER
-            textoPaint.isAntiAlias = true
+            if (porcentaje > 0) {
+                val textoPaint = Paint()
+                textoPaint.color = Color.BLACK  // Usar Color.WHITE directamente
+                textoPaint.textSize = 30f
+                textoPaint.textAlign = Paint.Align.CENTER
+                textoPaint.isAntiAlias = true
 
-            val textAngle = Math.toRadians((anguloInicio + anguloBarrido / 2).toDouble())
-            val textX = (centerX + (radius / 2) * cos(textAngle)).toFloat()
-            val textY = (centerY + (radius / 2) * sin(textAngle)).toFloat() + 10 // Ajuste para centrar verticalmente
-            canvas.drawText(gasto.categoria, textX, textY, textoPaint)
+                val textAngle = Math.toRadians((anguloInicio + anguloBarrido / 2).toDouble())
+                val textX = (centerX + (radius / 2) * cos(textAngle)).toFloat()
+                val textY = (centerY + (radius / 2) * sin(textAngle)).toFloat() + 10  // Ajuste para centrar verticalmente
+                canvas.drawText(gasto.categoria, textX, textY, textoPaint)
+            }
 
             anguloInicio += anguloBarrido
         }

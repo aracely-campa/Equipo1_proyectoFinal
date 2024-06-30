@@ -6,7 +6,6 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Adapter
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
@@ -16,9 +15,6 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import campa.aracely.fianzas_personales.utilities.CustomBarDrawable
 import campa.aracely.fianzas_personales.utilities.Gastos
 import campa.aracely.fianzas_personales.utilities.JSONFile
 import org.json.JSONArray
@@ -32,7 +28,7 @@ class GraficasActivity : AppCompatActivity() {
     var lista = ArrayList<Gastos>()
     var alimentos = 0.0F
     var transporte = 0.0F
-    var compras = 0.0F  
+    var compras = 0.0F
     var facturas = 0.0F
     var otros = 0.0F
     var data: Boolean = false
@@ -55,11 +51,11 @@ class GraficasActivity : AppCompatActivity() {
                 this.lista = parseJson(jsonArray)
                 for (i in lista) {
                     when (i.categoria) {
-                        "Alimentos" -> alimentos = i.monto
-                        "Transporte" -> transporte = i.monto
-                        "Compras" -> compras = i.monto
-                        "Facturas" -> facturas = i.monto
-                        "otros" -> otros = i.monto
+                        "Alimentos" -> alimentos += i.monto
+                        "Transporte" -> transporte += i.monto
+                        "Compras" -> compras += i.monto
+                        "Facturas" -> facturas += i.monto
+                        "otros" -> otros += i.monto
                     }
                 }
             } else {
@@ -75,7 +71,7 @@ class GraficasActivity : AppCompatActivity() {
         val lista = ArrayList<Gastos>()
         val formatter = DateTimeFormatter.ofPattern("MM-dd")
         val currentYear = LocalDate.now().year
-        for (i in 0..jsonArray.length()) {
+        for (i in 0 until jsonArray.length()) {
             try {
                 val nombre = jsonArray.getJSONObject(i).getString("nombre")
                 val porcentaje = jsonArray.getJSONObject(i).getDouble("porcentaje").toFloat()
@@ -126,12 +122,32 @@ class GraficasActivity : AppCompatActivity() {
         lista.add(Gastos("", pTransporte, R.color.azul1_1, transporte, "Transporte", fecha))
         lista.add(Gastos("", pCompras, R.color.white, compras, "Compras", fecha))
         lista.add(Gastos("", pFacturas, R.color.azul1_0, facturas, "Facturas", fecha))
-        lista.add(Gastos("", pOtros, R.color.black, otros, "Otros", fecha))
+        lista.add(Gastos("", pOtros, R.color.rojo_fuerte, otros, "Otros", fecha))
 
         val fondo = CustomCircleDrawable(this, lista)
         graph.background = fondo
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun extraerDatos() {
+        alimentos = 0.0F
+        transporte = 0.0F
+        compras = 0.0F
+        facturas = 0.0F
+        otros = 0.0F
+
+        for (i in lista) {
+            when (i.categoria) {
+                "Alimentos" -> alimentos += i.monto
+                "Transporte" -> transporte += i.monto
+                "Compras" -> compras += i.monto
+                "Facturas" -> facturas += i.monto
+                "Otros" -> otros += i.monto
+            }
+        }
+
+        actualizarGrafica()
+    }
 
     fun guardar() {
         val jsonArray = JSONArray()
@@ -158,7 +174,6 @@ class GraficasActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_graficas)
-
 
         val montoAlimentos: TextView = findViewById(R.id.textoAlimentos)
         val montoTransporte: TextView = findViewById(R.id.textoTransporte)
@@ -204,7 +219,7 @@ class GraficasActivity : AppCompatActivity() {
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("Not yet implemented")
+                // No se necesita implementar nada aquí
             }
         }
 
@@ -218,46 +233,41 @@ class GraficasActivity : AppCompatActivity() {
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("Not yet implemented")
+                // No se necesita implementar nada aquí
             }
         }
 
         fetchingData()
         if (data) {
-            val gastos = ArrayList<Gastos>()
-            val fondo = CustomCircleDrawable(this, gastos)
-            graph.background=fondo
-            montoAlimentos.setText("$alimentos")
-            montoTransporte.setText("$transporte")
-            montoCompras.setText("$compras")
-            montoFacturas.setText("$facturas")
-            montoOtros.setText("$otros")
-
-        }else{
-            actualizarGrafica()
-            montoAlimentos.setText("$alimentos")
-            montoTransporte.setText("$transporte")
-            montoCompras.setText("$compras")
-            montoFacturas.setText("$facturas")
-            montoOtros.setText("$otros")
+            extraerDatos()
+            montoAlimentos.text = "$alimentos"
+            montoTransporte.text = "$transporte"
+            montoCompras.text = "$compras"
+            montoFacturas.text = "$facturas"
+            montoOtros.text = "$otros"
+        } else {
+            extraerDatos()
+            montoAlimentos.text = "$alimentos"
+            montoTransporte.text = "$transporte"
+            montoCompras.text = "$compras"
+            montoFacturas.text = "$facturas"
+            montoOtros.text = "$otros"
         }
-        botonGuardar.setOnClickListener{
+
+        botonGuardar.setOnClickListener {
             guardar()
-            actualizarGrafica()
-            montoAlimentos.setText("$alimentos")
-            montoTransporte.setText("$transporte")
-            montoCompras.setText("$compras")
-            montoFacturas.setText("$facturas")
-            montoOtros.setText("$otros")
+            extraerDatos()
+            montoAlimentos.text = "$alimentos"
+            montoTransporte.text = "$transporte"
+            montoCompras.text = "$compras"
+            montoFacturas.text = "$facturas"
+            montoOtros.text = "$otros"
         }
 
-        prueba.setOnClickListener{
-           Gastos("",0.0f,R.color.black,compras,"Compras", LocalDate.now())
-            compras++
-            println(compras)
-            Gastos("",0.0f,R.color.black,facturas,"Facturas", LocalDate.now())
-            facturas++
+        prueba.setOnClickListener {
+            lista.add(Gastos("", 5.0f, R.color.black, 5.0f, "Compras", LocalDate.now()))
+            lista.add(Gastos("", 5.0f, R.color.black, 5.0f, "Facturas", LocalDate.now()))
+            extraerDatos()
         }
-
     }
 }

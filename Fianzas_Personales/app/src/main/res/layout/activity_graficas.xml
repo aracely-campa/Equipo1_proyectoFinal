@@ -88,6 +88,7 @@
             android:layout_marginLeft="15dp"/>
 
         <TextView
+            android:textAlignment="center"
             android:id="@+id/textoAlimentos"
             android:layout_height="20dp"
             android:layout_width="250dp"
@@ -105,6 +106,7 @@
             android:layout_marginLeft="15dp"/>
 
         <TextView
+            android:textAlignment="center"
             android:id="@+id/textoTransporte"
             android:layout_height="20dp"
             android:layout_width="250dp"
