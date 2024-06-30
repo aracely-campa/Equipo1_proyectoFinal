@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/rojo">
+    android:background="@color/rojo_fondo">
 
     <TextView
         android:id="@+id/welcome_text"
@@ -64,20 +64,44 @@
         android:textStyle="italic" />
 
     <AutoCompleteTextView
-        android:id="@+id/actv_categoria_ingreso_gasto"
+        android:id="@+id/ed_categoria"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="1dp"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="1dp"
         android:layout_marginRight="20dp"
         android:background="@drawable/edit_text_background"
-        android:padding="10dp"
         android:hint="@string/categoria"
+        android:inputType="none"
+        android:padding="10dp"
         android:textColor="@color/black"
-        android:textColorHint="#B0BEC5"
-        android:inputType="none" />
+        android:textColorHint="#B0BEC5" />
+    <TextView
+        android:id="@+id/tv_tipo_gasto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="30dp"
+        android:text="@string/tipo_ingreso"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="italic" />
 
+    <AutoCompleteTextView
+        android:id="@+id/ed_tipo_gasto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/edit_text_background"
+        android:inputType="none"
+        android:padding="10dp"
+        android:textColor="@color/black"
+        android:textColorHint="#B0BEC5" />
     <TextView
         android:id="@+id/tv_fecha"
         android:layout_width="wrap_content"

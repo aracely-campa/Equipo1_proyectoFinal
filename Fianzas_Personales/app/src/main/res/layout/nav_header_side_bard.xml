@@ -5,13 +5,13 @@
     android:gravity="bottom"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="@color/rojo"
+    android:background="@color/rojo_fondo"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/rojo"
+        android:background="@color/rojo_fondo"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:src="@drawable/ic_person" />
 

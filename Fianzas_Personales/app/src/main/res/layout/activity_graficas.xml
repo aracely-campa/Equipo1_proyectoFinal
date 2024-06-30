@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/rojo"
+    android:background="@color/rojo_fondo"
     tools:context=".GraficasActivity">
 
     <TextView
@@ -15,9 +15,15 @@
         android:text="Ingresos"
         android:layout_marginTop="30dp"
         android:gravity="center"
-        android:textSize="24sp"
+        android:textSize="30sp"
         android:textColor="@color/white"
         android:textStyle="bold"
+        />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/img_linea"
+        android:layout_gravity="center_horizontal"
         />
 <LinearLayout
     android:layout_width="match_parent"
@@ -64,6 +70,7 @@
             tools:layout_editor_absoluteY="201dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Categorias -->
     <GridLayout
         android:id="@+id/bargraphs"
         android:layout_width="match_parent"
@@ -74,7 +81,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Alimentos"
+            android:text="Alimentos:"
+            android:textColor="@color/white"
             android:textAlignment="center"
             android:layout_marginRight="15dp"
             android:layout_marginLeft="15dp"/>
@@ -84,12 +92,14 @@
             android:layout_height="20dp"
             android:layout_width="250dp"
             android:text=""
+            android:textColor="@color/white"
             />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Transporte"
+            android:text="Transporte:"
+            android:textColor="@color/white"
             android:textAlignment="center"
             android:layout_marginRight="15dp"
             android:layout_marginLeft="15dp"/>
@@ -99,12 +109,14 @@
             android:layout_height="20dp"
             android:layout_width="250dp"
             android:text=""
+            android:textColor="@color/white"
             />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Compras"
+            android:text="Compras:"
+            android:textColor="@color/white"
             android:textAlignment="center"
             android:layout_marginRight="15dp"
             android:layout_marginLeft="15dp"/>
@@ -115,15 +127,17 @@
             android:layout_height="20dp"
             android:layout_width="250dp"
             android:text=""
+            android:textColor="@color/white"
             />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Facturas"
+            android:text="Facturas:"
             android:textAlignment="center"
             android:layout_marginRight="15dp"
-            android:layout_marginLeft="15dp"/>
+            android:layout_marginLeft="15dp"
+            android:textColor="@color/white"/>
 
         <TextView
             android:textAlignment="center"
@@ -131,12 +145,14 @@
             android:layout_height="20dp"
             android:layout_width="250dp"
             android:text=""
+            android:textColor="@color/white"
             />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Otros"
+            android:text="Otros:"
+            android:textColor="@color/white"
             android:textAlignment="center"
             android:layout_marginRight="15dp"
             android:layout_marginLeft="15dp"/>
@@ -147,6 +163,7 @@
             android:layout_height="20dp"
             android:layout_width="250dp"
             android:text=""
+            android:textColor="@color/white"
             />
 
     </GridLayout>

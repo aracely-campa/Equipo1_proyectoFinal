@@ -4,7 +4,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="azul1.1">#3EBDC6</color>
     <color name="azul1.0">#0099CC</color>
-    <color name="rojo">#E63946</color>
+    <color name="rojo_fondo">#F46C76</color>
+    <color name="rojo_fuerte">#E63946</color>
     <color name="blanco_azulado">#F1FAEE</color>
     <color name="azul_claro">#56C2C7</color>
     <color name="azul_fuerte">#457B9D</color>

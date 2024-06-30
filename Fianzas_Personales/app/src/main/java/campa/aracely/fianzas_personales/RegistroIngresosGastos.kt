@@ -1,92 +1,64 @@
 package campa.aracely.fianzas_personales
 
 import android.app.DatePickerDialog
-import android.icu.util.Calendar
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import java.text.SimpleDateFormat
-import java.util.Locale
+import java.util.*
 
 class RegistroIngresosGastos : AppCompatActivity() {
+
+    private lateinit var edCantidad: EditText
+    private lateinit var etFechaRegistro: EditText
+    private lateinit var actvCategoria: AutoCompleteTextView
+    private lateinit var tipoIngresoGasto: AutoCompleteTextView
+    private lateinit var btnRegistrar: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_registro_ingresos_gastos)
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
-        /** Inicio edCantidad */
-        // Inicializa el edCantidad
-        val edCantidad: EditText = findViewById(R.id.ed_cantidad_ingreso_gasto)
+     
+        edCantidad = findViewById(R.id.ed_cantidad_ingreso_gasto)
+        etFechaRegistro = findViewById(R.id.ed_fecha_ingreso_gasto)
+        actvCategoria = findViewById(R.id.ed_categoria)
+        tipoIngresoGasto = findViewById(R.id.ed_tipo_gasto)
+        btnRegistrar = findViewById(R.id.btn_registrar_ingreso_gasto)
 
-        // Valida el input del editText cantidad en tiempo real
-        edCantidad.addTextChangedListener(object: TextWatcher {
+        edCantidad.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+            override fun afterTextChanged(s: Editable?) {
                 if (!isValidDouble(s.toString())) {
-                    edCantidad.error = "Por favor, ingresa un número válido"
+                    edCantidad.error = getString(R.string.ingresa_numero_valido)
+                } else {
+                    edCantidad.error = null
                 }
             }
-
-            override fun afterTextChanged(s: Editable?) {}
         })
-        /** Fin edCantidad */
 
-        /** Inicio actvCategoria */
-        // Inicializa el actvCategoria
-        val actvCategoria: AutoCompleteTextView = findViewById(R.id.actv_categoria_ingreso_gasto)
-
-        // Crea un ArrayAdapter con las opciones de registro
-        val categorias = listOf("ingreso", "gasto")
-        val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, categorias)
-
-        // Asigna el adapter al actvCategoria
-        actvCategoria.setAdapter(adapter)
-
-        // Muestra la lista desplegable cuando el usuario haga click en el campo
-        actvCategoria.setOnClickListener {
-            actvCategoria.showDropDown()
-        }
-        /** Fin actvCategoria*/
-
-        /** Inicio edFecha */
-        // Inicializa el edFecha
-        val edFecha: EditText = findViewById(R.id.ed_fecha_ingreso_gasto)
-        // Instancia de Calendar para obtener la fecha actual
         val calendar = Calendar.getInstance()
-
-        // Define un listener para manejar la fecha seleccionada en el DatePickerDialog
         val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-            // Configura el Calendar con la fecha seleccionada
             calendar.set(Calendar.YEAR, year)
             calendar.set(Calendar.MONTH, month)
             calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-
-            //Define el formato deseado
-            val dateFormat = "dd/MM/yyyy" // Formato día, mes, año
-            val sdf = SimpleDateFormat(dateFormat, Locale.US)
-
-            // Actualiza el texto del edFecha con la fecha con el formato seleccionado
-            edFecha.setText(sdf.format(calendar.time))
+            updateDateInView(calendar)
         }
 
-        // Configura el evento de click para el edFecha
-        edFecha.setOnClickListener {
-            // Muestra el DatePickerDialog cuando se hace click en el edFecha
+        etFechaRegistro.setOnClickListener {
             DatePickerDialog(
                 this,
                 dateSetListener,
@@ -95,29 +67,44 @@ class RegistroIngresosGastos : AppCompatActivity() {
                 calendar.get(Calendar.DAY_OF_MONTH)
             ).show()
         }
-        /** Fin edFecha */
 
-        /** Inicio btnRegistrarIngresoGasto */
-        // Inicializa el btnRegistrarIngresoGasto
-        val btnRegistrar: Button = findViewById(R.id.btn_registrar_ingreso_gasto)
-
-        // Configura el evento Click del boton
-        btnRegistrar.setOnClickListener {
-            // Le copie la idea a la Chely de solo mostrar un texto de aqui a que le añadamos
-            // Funciones de guardado real al proyecto jijiji
-
-            Toast.makeText(this, "Ingreso/Gasto registrado exitosamente", Toast.LENGTH_SHORT).show()
+        val categorias = listOf(
+            getString(R.string.alimentos),
+            getString(R.string.facturas),
+            getString(R.string.compras),
+            getString(R.string.transportes),
+            getString(R.string.otros)
+        )
+        val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, categorias)
+        actvCategoria.setAdapter(adapter)
+        actvCategoria.setOnClickListener {
+            actvCategoria.showDropDown()
         }
-        /** Fin btnRegistrarIngresoGasto */
-    }
 
-    // Valida que el input del edCantidad sea double
-    fun isValidDouble(text: String): Boolean {
+        val tipos = listOf(getString(R.string.ingreso), getString(R.string.gasto))
+        val adapterTipos = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, tipos)
+        tipoIngresoGasto.setAdapter(adapterTipos)
+        tipoIngresoGasto.setOnClickListener {
+            tipoIngresoGasto.showDropDown()
+        }
+
+        btnRegistrar.setOnClickListener {
+
+            Toast.makeText(this, getString(R.string.ingreso_gasto_registrado), Toast.LENGTH_SHORT).show()
+        }
+    }
+    private fun isValidDouble(text: String): Boolean {
         return try {
             text.toDouble()
             true
         } catch (e: NumberFormatException) {
             false
         }
+    }
+
+    private fun updateDateInView(calendar: Calendar) {
+        val dateFormat = "dd/MM/yyyy"
+        val sdf = SimpleDateFormat(dateFormat, Locale.US)
+        etFechaRegistro.setText(sdf.format(calendar.time))
     }
 }
