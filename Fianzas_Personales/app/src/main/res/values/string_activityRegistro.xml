@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mensaje_correo_no_valido">Correo electrónico no válido</string>
+    <string name="mensaje_error_contraseña">Las contraseñas no coinciden</string>
+    <string name="mensaje_registro_exitoso">Registro éxitoso</string>
+    <string name="mensaje_error_edad">Debe ser mayor de edad para registrarte</string>
+    <string name="mensaje_error_registrar">Por favor, complete todos los campos correctamente</string>
+    <string name="mensaje_valida_contraseña">La contraseña debe tener al menos 6 caracteres</string>
+    <string name="mensaje_error_nombre">El campo de nombre(s) está vacío</string>
+    <string name="mensaje_error_apellidos">El campo de apellidos está vacío</string>
+    <string name="mensaje_error_correo_registro">El correo electrónico no es válido</string>
+    <string name="mensaje_error_clave">La contraseña debe tener al menos 6 caracteres</string>
+    <string name="mensaje_error_confirmar_clave">Las contraseñas no coinciden</string>
+    <string name="mensaje_error_fecha">La fecha de nacimiento es obligatoria</string>
+    <string name="mensaje_error_terminos">Debe aceptar los términos y condiciones</string>
+</resources>

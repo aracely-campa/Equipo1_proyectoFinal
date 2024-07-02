@@ -10,6 +10,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import campa.aracely.fianzas_personales.utilities.Ingresos
 import com.google.android.material.navigation.NavigationView
 
+
 class ActivityInicio : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var drawerLayout: DrawerLayout
@@ -17,43 +18,39 @@ class ActivityInicio : AppCompatActivity(), NavigationView.OnNavigationItemSelec
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_inicio)
+        inicializarDrawer()
+        configurarBotonDrawer()
+    }
 
+    private fun inicializarDrawer() {
         drawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
+        navView.setNavigationItemSelectedListener(this)
+    }
 
+    private fun configurarBotonDrawer() {
         val btnOpenDrawer: ImageButton = findViewById(R.id.btn_open_drawer)
         btnOpenDrawer.setOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
         }
-
-        navView.setNavigationItemSelectedListener(this)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.nav_registro_ingreso -> {
-                val intent = Intent(this, RegistroIngresosGastos::class.java)
-                startActivity(intent)
-            }
-            R.id.nav_historial -> {
-                val intent = Intent(this, Ingresos::class.java)
-                startActivity(intent)
-            }
-            R.id.nav_ver_gastos -> {
-                val intent = Intent(this, GraficasActivity::class.java)
-                startActivity(intent)
-            }
-            R.id.nav_cerrar_sesion -> {
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-            }
-            R.id.nav_ver_grafricas -> {
-                val intent = Intent(this, GraficasActivity::class.java)
-                startActivity(intent)
-            }
+        val destino = when (item.itemId) {
+            R.id.nav_registro_ingreso -> RegistroIngresosGastos::class.java
+            R.id.nav_historial -> Ingresos::class.java
+            R.id.nav_ver_gastos -> GraficasActivity::class.java
+            R.id.nav_cerrar_sesion -> MainActivity::class.java
+            R.id.nav_ver_grafricas -> GraficasActivity::class.java
+            else -> null
         }
+        destino?.let { navegarA(it) }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    private fun navegarA(destino: Class<*>) {
+        startActivity(Intent(this, destino))
     }
 
     override fun onBackPressed() {

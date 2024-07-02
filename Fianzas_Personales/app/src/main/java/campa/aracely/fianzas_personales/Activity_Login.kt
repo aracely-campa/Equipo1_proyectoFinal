@@ -14,60 +14,85 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 class Activity_Login : AppCompatActivity() {
+    private lateinit var etCorreo: EditText
+    private lateinit var etClave: EditText
+    private lateinit var btnIniciarSesion: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         enableEdgeToEdge()
+        configurarBordesVentana()
+        inicializarVistas()
+        configurarValidacionCorreo()
 
+        btnIniciarSesion.setOnClickListener {
+            manejarInicioSesion()
+        }
+    }
+
+    private fun configurarBordesVentana() {
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+    }
 
-        val etCorreo: EditText = findViewById(R.id.et_correo)
-        val etClave: EditText = findViewById(R.id.et_clave)
-        val btnIniciarSesion: Button = findViewById(R.id.btn_iniciarSesion)
+    private fun inicializarVistas() {
+        etCorreo = findViewById(R.id.et_correo)
+        etClave = findViewById(R.id.et_clave)
+        btnIniciarSesion = findViewById(R.id.btn_iniciarSesion)
+    }
 
-        /** Inicio validacion correo */
-        etCorreo.addTextChangedListener(object: TextWatcher {
+    private fun configurarValidacionCorreo() {
+        etCorreo.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
             override fun afterTextChanged(s: Editable?) {
-                s?.let {
-                    val email = it.toString()
-                    if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                        etCorreo.error = "Correo electrónico no válido"
-                    } else {
-                        etCorreo.error = null
-                    }
-                }
+                validarCorreo(s)
             }
         })
-        /** Fin validacion correo */
-        fun camposValidos(etCorreo: EditText, etClave: EditText): Boolean {
-            val correoValido = etCorreo.error == null
-            val claveValida = etClave.text.isNotEmpty()
+    }
 
-            if (!correoValido) {
-                etCorreo.error = "El correo electrónico no es válido"
-            }
-            if (!claveValida) {
-                etClave.error = "La contraseña es obligatoria"
-            }
-            return correoValido && claveValida
-        }
-
-        btnIniciarSesion.setOnClickListener {
-            if (camposValidos(etCorreo, etClave)) {
-                Toast.makeText(this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, ActivityInicio::class.java)
-                startActivity(intent)
+    private fun validarCorreo(s: Editable?) {
+        s?.let {
+            val email = it.toString()
+            if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                etCorreo.error = getString(R.string.mensaje_error_correo)
             } else {
-                Toast.makeText(this, "Por favor, complete todos los campos correctamente", Toast.LENGTH_SHORT).show()
+                etCorreo.error = null
             }
         }
+    }
+
+    private fun manejarInicioSesion() {
+        if (camposValidos()) {
+            Toast.makeText(this, getString(R.string.mensaje_inicio_sesion), Toast.LENGTH_SHORT).show()
+            navegarAPrincipal()
+        } else {
+            Toast.makeText(this, getString(R.string.mensaje_error_inicio_sesion), Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun camposValidos(): Boolean {
+        val correoValido = etCorreo.error == null
+        val claveValida = etClave.text.isNotEmpty()
+
+        if (!correoValido) {
+            etCorreo.error = getString(R.string.mensaje_error_correo)
+        }
+        if (!claveValida) {
+            etClave.error = getString(R.string.mensaje_contraseña_obligatoria)
+        }
+
+        return correoValido && claveValida
+    }
+
+    private fun navegarAPrincipal() {
+        val intent = Intent(this, ActivityInicio::class.java)
+        startActivity(intent)
     }
 }

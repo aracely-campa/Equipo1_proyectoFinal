@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mensaje_error_correo">Correo electrónico no válido></string>
+    <string name="mensaje_contraseña_obligatoria">La contraseña es obligatoria></string>
+    <string name="mensaje_inicio_sesion">Inicio de sesión exitoso</string>
+    <string name="mensaje_error_inicio_sesion">Por favor, complete todos los campos correctamente</string>
+</resources>

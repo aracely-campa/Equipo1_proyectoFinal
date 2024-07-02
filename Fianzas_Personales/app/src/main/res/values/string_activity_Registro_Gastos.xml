@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mensaje_campos_incompletos">Por favor, complete todos los campos correctamente</string>
+    <string name="mensaje_validacion_cantidad">Ingrese una cantidad válida</string>
+    <string name="mensaje_validacion_categoria">La categoría es obligatoria</string>
+    <string name="mensaje_validacion_fecha">La fecha de registro es obligatoria</string>
+    <string name="mensaje_validacion_tipo_gasto">El tipo de ingreso o gasto es obligatorio</string>
+</resources>

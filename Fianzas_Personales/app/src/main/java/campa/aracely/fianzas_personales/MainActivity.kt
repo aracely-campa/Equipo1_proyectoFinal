@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
 
         val registerText: TextView = findViewById(R.id.register_text)
         registerText.setOnClickListener {
-            val intent = Intent(this, ActivityRegistro::class.java) // Asegúrate de que ActivityRegistro es la actividad de registro
+            val intent = Intent(this, ActivityRegistro::class.java)
             startActivity(intent)
         }
     }

@@ -219,7 +219,6 @@ class GraficasActivity : AppCompatActivity() {
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                // No se necesita implementar nada aquí
             }
         }
 
@@ -233,7 +232,6 @@ class GraficasActivity : AppCompatActivity() {
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                // No se necesita implementar nada aquí
             }
         }
 

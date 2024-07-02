@@ -1,10 +1,7 @@
 package campa.aracely.fianzas_personales
-
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.widget.*
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -26,61 +23,31 @@ class RegistroIngresosGastos : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_registro_ingresos_gastos)
 
+        configurarBordesVentana()
+        inicializarVistas()
+        configurarDatePicker()
+        configurarDropdown(actvCategoria, obtenerCategorias())
+        configurarDropdown(tipoIngresoGasto, obtenerTiposIngresoGasto())
+        configurarBotonRegistrar()
+    }
+
+    private fun configurarBordesVentana() {
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+    }
 
+    private fun inicializarVistas() {
         etFechaNacimiento = findViewById(R.id.et_fecha_nacimiento)
         edCantidad = findViewById(R.id.ed_cantidad_ingreso_gasto)
         actvCategoria = findViewById(R.id.ed_categoria)
         tipoIngresoGasto = findViewById(R.id.ed_tipo_gasto)
         btnRegistrar = findViewById(R.id.btn_registrar_ingreso_gasto)
-
-        activateCalendar()
-
-        activateCategoriaDropdown()
-
-        activateTipoIngresoGastoDropdown()
-
-
-        btnRegistrar.setOnClickListener {
-            if (camposValidos()) {
-                Toast.makeText(this, getString(R.string.ingreso_gasto_registrado), Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, ActivityInicio::class.java)
-                startActivity(intent)
-            } else {
-                Toast.makeText(this, "  Por favor, complete todos los campos correctamente", Toast.LENGTH_SHORT).show()
-            }
-        }
     }
 
-    private fun activateTipoIngresoGastoDropdown() {
-        val tipos = listOf(getString(R.string.ingreso), getString(R.string.gasto))
-        val adapterTipos = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, tipos)
-        tipoIngresoGasto.setAdapter(adapterTipos)
-        tipoIngresoGasto.setOnClickListener {
-            tipoIngresoGasto.showDropDown()
-        }
-    }
-
-    private fun activateCategoriaDropdown() {
-        val categorias = listOf(
-            getString(R.string.alimentos),
-            getString(R.string.facturas),
-            getString(R.string.compras),
-            getString(R.string.transportes),
-            getString(R.string.otros)
-        )
-        val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, categorias)
-        actvCategoria.setAdapter(adapter)
-        actvCategoria.setOnClickListener {
-            actvCategoria.showDropDown()
-        }
-    }
-
-    private fun activateCalendar() {
+    private fun configurarDatePicker() {
         val calendar = Calendar.getInstance()
         val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
             calendar.set(Calendar.YEAR, year)
@@ -103,6 +70,37 @@ class RegistroIngresosGastos : AppCompatActivity() {
         }
     }
 
+    private fun configurarDropdown(campo: AutoCompleteTextView, opciones: List<String>) {
+        val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, opciones)
+        campo.setAdapter(adapter)
+        campo.setOnClickListener { campo.showDropDown() }
+    }
+
+    private fun obtenerCategorias(): List<String> {
+        return listOf(
+            getString(R.string.alimentos),
+            getString(R.string.facturas),
+            getString(R.string.compras),
+            getString(R.string.transportes),
+            getString(R.string.otros)
+        )
+    }
+
+    private fun obtenerTiposIngresoGasto(): List<String> {
+        return listOf(getString(R.string.ingreso), getString(R.string.gasto))
+    }
+
+    private fun configurarBotonRegistrar() {
+        btnRegistrar.setOnClickListener {
+            if (camposValidos()) {
+                Toast.makeText(this, getString(R.string.ingreso_gasto_registrado), Toast.LENGTH_SHORT).show()
+                startActivity(Intent(this, ActivityInicio::class.java))
+            } else {
+                Toast.makeText(this, getString(R.string.mensaje_campos_incompletos), Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
     private fun isValidDouble(text: String): Boolean {
         return try {
             text.toDouble()
@@ -118,21 +116,10 @@ class RegistroIngresosGastos : AppCompatActivity() {
         val categoriaValida = actvCategoria.text.isNotEmpty()
         val tipoValido = tipoIngresoGasto.text.isNotEmpty()
 
-        if (!cantidadValida) {
-            edCantidad.error = "Ingrese una cantidad válida"
-        }
-
-        if (!fechaValida) {
-            etFechaNacimiento.error = "La fecha de registro es obligatoria"
-        }
-
-        if (!categoriaValida) {
-            actvCategoria.error = "La categoría es obligatoria"
-        }
-
-        if (!tipoValido) {
-            tipoIngresoGasto.error = "El tipo de ingreso o gasto es obligatorio"
-        }
+        if (!cantidadValida) edCantidad.error = getString(R.string.mensaje_validacion_cantidad)
+        if (!fechaValida) etFechaNacimiento.error = getString(R.string.mensaje_validacion_fecha)
+        if (!categoriaValida) actvCategoria.error = getString(R.string.mensaje_validacion_categoria)
+        if (!tipoValido) tipoIngresoGasto.error = getString(R.string.mensaje_validacion_tipo_gasto)
 
         return cantidadValida && fechaValida && categoriaValida && tipoValido
     }
