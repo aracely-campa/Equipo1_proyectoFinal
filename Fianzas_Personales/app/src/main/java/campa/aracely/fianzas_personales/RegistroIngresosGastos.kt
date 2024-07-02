@@ -51,7 +51,7 @@ class RegistroIngresosGastos : AppCompatActivity() {
                 val intent = Intent(this, ActivityInicio::class.java)
                 startActivity(intent)
             } else {
-                Toast.makeText(this, "Por favor, complete todos los campos correctamente", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "  Por favor, complete todos los campos correctamente", Toast.LENGTH_SHORT).show()
             }
         }
     }

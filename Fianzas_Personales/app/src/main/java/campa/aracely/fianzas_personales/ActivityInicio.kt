@@ -32,7 +32,7 @@ class ActivityInicio : AppCompatActivity(), NavigationView.OnNavigationItemSelec
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_registro_ingreso -> {
-                val intent = Intent(this, Ingresos::class.java)
+                val intent = Intent(this, RegistroIngresosGastos::class.java)
                 startActivity(intent)
             }
             R.id.nav_historial -> {

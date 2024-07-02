@@ -51,7 +51,7 @@ class GraficasActivity : AppCompatActivity() {
                 this.lista = parseJson(jsonArray)
                 for (i in lista) {
                     when (i.categoria) {
-                        "Alimentos" -> alimentos += i.monto
+                        "@string/dick123" -> alimentos += i.monto
                         "Transporte" -> transporte += i.monto
                         "Compras" -> compras += i.monto
                         "Facturas" -> facturas += i.monto
