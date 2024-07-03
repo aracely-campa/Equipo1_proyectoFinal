@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="iniciarSesion">Iniciar sesion</string>
+    <string name="correo">Correo:</string>
+    <string name="clave">Contraseña:</string>
+    <string name="hintCorreo">ejemplo@gmail.com</string>
+    <string name="hintContra">Contraseña</string>
+</resources>

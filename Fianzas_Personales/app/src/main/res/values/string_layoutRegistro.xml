@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="titulo_registro">Registrarte</string>
+    <string name="nombre">Nombre(s):</string>
+    <string name="apellidos">Apellidos:</string>
+    <string name="confirmar_clave">Confirmar contraseña:</string>
+    <string name="fecha_nacimiento">Fecha de nacimiento</string>
+    <string name="terminos">Acepto términos y condiciones</string>
+</resources>

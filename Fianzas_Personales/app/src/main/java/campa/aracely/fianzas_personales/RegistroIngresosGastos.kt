@@ -1,4 +1,5 @@
 package campa.aracely.fianzas_personales
+
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
@@ -13,7 +14,7 @@ import java.util.*
 class RegistroIngresosGastos : AppCompatActivity() {
 
     private lateinit var edCantidad: EditText
-    private lateinit var etFechaNacimiento: EditText
+    private lateinit var et_fecha_registro: EditText
     private lateinit var actvCategoria: AutoCompleteTextView
     private lateinit var tipoIngresoGasto: AutoCompleteTextView
     private lateinit var btnRegistrar: Button
@@ -40,7 +41,7 @@ class RegistroIngresosGastos : AppCompatActivity() {
     }
 
     private fun inicializarVistas() {
-        etFechaNacimiento = findViewById(R.id.et_fecha_nacimiento)
+        et_fecha_registro = findViewById(R.id.et_fecha_nacimiento)
         edCantidad = findViewById(R.id.ed_cantidad_ingreso_gasto)
         actvCategoria = findViewById(R.id.ed_categoria)
         tipoIngresoGasto = findViewById(R.id.ed_tipo_gasto)
@@ -56,10 +57,10 @@ class RegistroIngresosGastos : AppCompatActivity() {
 
             val dateFormat = "dd/MM/yyyy"
             val sdf = SimpleDateFormat(dateFormat, Locale.US)
-            etFechaNacimiento.setText(sdf.format(calendar.time))
+            et_fecha_registro.setText(sdf.format(calendar.time))
         }
 
-        etFechaNacimiento.setOnClickListener {
+        et_fecha_registro.setOnClickListener {
             DatePickerDialog(
                 this,
                 dateSetListener,
@@ -93,8 +94,7 @@ class RegistroIngresosGastos : AppCompatActivity() {
     private fun configurarBotonRegistrar() {
         btnRegistrar.setOnClickListener {
             if (camposValidos()) {
-                Toast.makeText(this, getString(R.string.ingreso_gasto_registrado), Toast.LENGTH_SHORT).show()
-                startActivity(Intent(this, ActivityInicio::class.java))
+                registrarIngresoGasto()
             } else {
                 Toast.makeText(this, getString(R.string.mensaje_campos_incompletos), Toast.LENGTH_SHORT).show()
             }
@@ -112,15 +112,25 @@ class RegistroIngresosGastos : AppCompatActivity() {
 
     private fun camposValidos(): Boolean {
         val cantidadValida = edCantidad.text.isNotEmpty() && isValidDouble(edCantidad.text.toString())
-        val fechaValida = etFechaNacimiento.text.isNotEmpty()
+        val fechaValida = et_fecha_registro.text.isNotEmpty()
         val categoriaValida = actvCategoria.text.isNotEmpty()
         val tipoValido = tipoIngresoGasto.text.isNotEmpty()
 
         if (!cantidadValida) edCantidad.error = getString(R.string.mensaje_validacion_cantidad)
-        if (!fechaValida) etFechaNacimiento.error = getString(R.string.mensaje_validacion_fecha)
+        if (!fechaValida) et_fecha_registro.error = getString(R.string.mensaje_validacion_fecha)
         if (!categoriaValida) actvCategoria.error = getString(R.string.mensaje_validacion_categoria)
         if (!tipoValido) tipoIngresoGasto.error = getString(R.string.mensaje_validacion_tipo_gasto)
 
         return cantidadValida && fechaValida && categoriaValida && tipoValido
+    }
+
+    private fun registrarIngresoGasto() {
+        val fecha = et_fecha_registro.text.toString()
+        val categoria = actvCategoria.text.toString()
+        val cantidad = edCantidad.text.toString().toDouble()
+        val tipo = tipoIngresoGasto.text.toString()
+        val intent = Intent(this, ActivityHistorial::class.java)
+        startActivity(intent)
+        finish()
     }
 }
