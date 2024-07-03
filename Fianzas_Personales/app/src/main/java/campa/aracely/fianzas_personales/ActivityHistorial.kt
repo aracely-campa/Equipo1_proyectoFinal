@@ -1,6 +1,6 @@
 package campa.aracely.fianzas_personales
 
-import android.os.Bundle
+import  android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
@@ -16,8 +16,7 @@ class ActivityHistorial : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_historial)
 
-        inicializarVistas()
-        mostrarDatos()
+
     }
 
     private fun inicializarVistas() {
