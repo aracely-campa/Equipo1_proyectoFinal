@@ -15,6 +15,11 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import campa.aracely.fianzas_personales.Database.Database
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -31,6 +36,10 @@ class ActivityRegistro : AppCompatActivity() {
     private lateinit var btnRegistrar: Button
     private lateinit var calendar: Calendar
 
+    private lateinit var database: Database
+    private lateinit var auth: FirebaseAuth
+    private lateinit var firestore: FirebaseFirestore
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -41,6 +50,10 @@ class ActivityRegistro : AppCompatActivity() {
         configurarDatePicker()
         configurarValidacionCampos()
         configurarBotonRegistrar()
+
+        // Inicializar Firebase Auth y Firestore
+        auth = FirebaseAuth.getInstance()
+        firestore = FirebaseFirestore.getInstance()
     }
 
     private fun configurarBordesVentana() {
@@ -142,13 +155,22 @@ class ActivityRegistro : AppCompatActivity() {
                 val edad = getEdad(fechaNacimiento)
 
                 if (edad >= 18) {
-                    Toast.makeText(this, getString(R.string.mensaje_registro_exitoso), Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this, ActivityInicio::class.java))
+                    Toast.makeText(
+                        this,
+                        getString(R.string.mensaje_registro_exitoso),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    registrarUsuario()
                 } else {
-                    Toast.makeText(this, getString(R.string.mensaje_error_edad), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.mensaje_error_edad), Toast.LENGTH_SHORT)
+                        .show()
                 }
             } else {
-                Toast.makeText(this, getString(R.string.mensaje_error_registrar), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.mensaje_error_registrar),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -158,7 +180,8 @@ class ActivityRegistro : AppCompatActivity() {
         val apellidoNoVacio = etApellidos.text.isNotEmpty()
         val correoValido = etCorreo.error == null
         val claveValida = etClave.text.length >= 6
-        val confirmarClaveValida = etConfirmarClave.error == null && etConfirmarClave.text.toString() == etClave.text.toString()
+        val confirmarClaveValida =
+            etConfirmarClave.error == null && etConfirmarClave.text.toString() == etClave.text.toString()
         val fechaNacimientoValida = etFechaNacimiento.text.isNotEmpty()
         val terminosAceptados = cbTerminos.isChecked
 
@@ -166,8 +189,10 @@ class ActivityRegistro : AppCompatActivity() {
         if (!apellidoNoVacio) etApellidos.error = getString(R.string.mensaje_error_apellidos)
         if (!correoValido) etCorreo.error = getString(R.string.mensaje_error_correo_registro)
         if (!claveValida) etClave.error = getString(R.string.mensaje_error_clave)
-        if (!confirmarClaveValida) etConfirmarClave.error = getString(R.string.mensaje_error_confirmar_clave)
-        if (!fechaNacimientoValida) etFechaNacimiento.error = getString(R.string.mensaje_error_fecha)
+        if (!confirmarClaveValida) etConfirmarClave.error =
+            getString(R.string.mensaje_error_confirmar_clave)
+        if (!fechaNacimientoValida) etFechaNacimiento.error =
+            getString(R.string.mensaje_error_fecha)
         if (!terminosAceptados) cbTerminos.error = getString(R.string.mensaje_error_terminos)
 
         return nombreNoVacio && apellidoNoVacio && correoValido && claveValida && confirmarClaveValida && fechaNacimientoValida && terminosAceptados
@@ -183,5 +208,42 @@ class ActivityRegistro : AppCompatActivity() {
         }
 
         return edad
+    }
+
+    private fun registrarUsuario() {
+        val nombre = etNombre.text.toString()
+        val apellidos = etApellidos.text.toString()
+        val correo = etCorreo.text.toString()
+        val clave = etClave.text.toString()
+        val fechaNacimiento = etFechaNacimiento.text.toString()
+
+        auth.createUserWithEmailAndPassword(correo, clave)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val user = auth.currentUser
+                    val userId = user?.uid
+
+                    val userMap = hashMapOf(
+                        "nombre" to nombre,
+                        "apellidos" to apellidos,
+                        "correoElectronico" to correo,
+                        "fechaNacimiento" to fechaNacimiento
+                    )
+
+                    if (userId != null) {
+                        firestore.collection("users").document(userId)
+                            .set(userMap)
+                            .addOnSuccessListener {
+                                Toast.makeText(this, "Usuario registrado y guardado en Firestore", Toast.LENGTH_SHORT).show()
+                                startActivity(Intent(this, ActivityInicio::class.java))
+                            }
+                            .addOnFailureListener { e ->
+                                Toast.makeText(this, "Error al guardar en Firestore: ${e.message}", Toast.LENGTH_SHORT).show()
+                            }
+                    }
+                } else {
+                    Toast.makeText(this, "Error al registrar: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
     }
 }
