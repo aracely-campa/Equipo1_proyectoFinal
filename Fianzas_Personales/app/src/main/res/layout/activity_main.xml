@@ -29,7 +29,7 @@
         android:layout_marginTop="150dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="53dp"
-        android:text="Nos preocupamos por tu salud financiera."
+        android:text="@string/info"
         android:textColor="@color/white"
         android:textSize="25sp"
         android:textAlignment="center"
@@ -99,7 +99,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="¿No tienes cuenta?"
+            android:text="@string/no_tienes_cuenta"
             android:textColor="@color/black"
             android:textSize="14sp"
             android:textStyle="italic" />
@@ -111,7 +111,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="4dp"
             android:gravity="center"
-            android:text="Regístrate"
+            android:text="@string/boton_registrarte"
             android:textColor="@color/rojo_fuerte"
             android:textSize="14sp"
             android:textStyle="bold" />

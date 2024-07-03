@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="registro_ingresos">Registro ingreso/gasto</string>
+    <string name="cantidad">Cantidad $$$:</string>
+    <string name="categoria">Alimentos/Facturas/Compras/etc</string>
+    <string name="tipo_ingreso">Ingreso/Gasto</string>
+    <string name="fecha">Fecha:</string>
+    <string name="descripcion">Descripción:</string>
+    <string name="titulo_ingresos">Ingresos</string>
+    <string name="boton_ver">Ver mas</string>
+    <string name="boton_registrar">Registrar</string>
+    <string name="ingresa_numero_valido">Por favor, ingresa un número válido</string>
+    <string name="ingreso_gasto_registrado">Ingreso/Gasto registrado exitosamente</string>
+    <string name="ingreso">Ingreso</string>
+    <string name="gasto">Gasto</string>
+    <string name="btn_registro_gasto">Registrar</string>
+</resources>

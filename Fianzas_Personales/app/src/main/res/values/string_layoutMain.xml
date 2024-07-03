@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Fianzas_Personales</string>
+    <string name="titulo_bienvenido">Domitzu Fiance</string>
+    <string name="titulo_IniciarSesion">Iniciar Sesion</string>
+    <string name="no_tienes_cuenta">¿No tienes cuenta?</string>
+    <string name="boton_registrarte">Registrarte</string>
+    <string name="boton_iniciarSesion">Ingresar</string>
+    <string name="info">Nos preocupamos por tu salud financiera.</string>
+</resources>

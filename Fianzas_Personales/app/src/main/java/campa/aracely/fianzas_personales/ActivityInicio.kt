@@ -7,7 +7,6 @@ import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import campa.aracely.fianzas_personales.utilities.Ingresos
 import com.google.android.material.navigation.NavigationView
 
 
@@ -38,7 +37,7 @@ class ActivityInicio : AppCompatActivity(), NavigationView.OnNavigationItemSelec
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         val destino = when (item.itemId) {
             R.id.nav_registro_ingreso -> RegistroIngresosGastos::class.java
-            R.id.nav_historial -> Ingresos::class.java
+            R.id.nav_historial -> ActivityHistorial::class.java
             R.id.nav_ver_gastos -> GraficasActivity::class.java
             R.id.nav_cerrar_sesion -> MainActivity::class.java
             R.id.nav_ver_grafricas -> GraficasActivity::class.java
