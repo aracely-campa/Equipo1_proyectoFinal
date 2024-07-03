@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/rojo_fondo"
     android:orientation="vertical"
-    tools:context=".utilities.ActivityHistorial">
+    tools:context=".ActivityHistorial">
 
     <TextView
         android:layout_width="match_parent"
