@@ -2,23 +2,90 @@ package campa.aracely.fianzas_personales
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import campa.aracely.fianzas_personales.utilities.Transaccion
+import campa.aracely.fianzas_personales.utilities.TransaccionAdapter
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
 
 
 class ActivityInicio : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var drawerLayout: DrawerLayout
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: TransaccionAdapter
+    private var transacciones = mutableListOf<Transaccion>()
+    private lateinit var firestore: FirebaseFirestore
+    private lateinit var auth: FirebaseAuth
+    private var listenerRegistration: ListenerRegistration? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_inicio)
         inicializarDrawer()
         configurarBotonDrawer()
+
+        auth = FirebaseAuth.getInstance()
+        firestore = FirebaseFirestore.getInstance()
+
+        recyclerView = findViewById(R.id.recycler_view)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        adapter = TransaccionAdapter(transacciones) { transaccion ->
+            eliminarTransaccion(transaccion)
+        }
+        recyclerView.adapter = adapter
+
+        cargarTransacciones()
+    }
+
+    private fun cargarTransacciones() {
+        val currentUser: FirebaseUser? = auth.currentUser
+        if(currentUser != null) {
+            val userId = currentUser.uid
+            val transaccionRef = firestore.collection("gastos")
+
+            listenerRegistration = transaccionRef.addSnapshotListener{ snapshot, error ->
+                if(error != null) {
+                    return@addSnapshotListener
+                }
+
+                if(snapshot != null && !snapshot.isEmpty) {
+                    for(document in snapshot.documents) {
+                        val transaccion = document.toObject(Transaccion::class.java)
+                        if(transaccion != null) {
+                            transacciones.add(transaccion)
+                        }
+                    }
+                }
+            }
+        } else {
+            //val intent = Intent(this, Activity_Login::class.java)
+            //startActivity(intent)
+            //finish()
+        }
+    }
+
+    private fun eliminarTransaccion(transaccion: Transaccion) {
+        firestore.collection("transacciones").document().delete()
+            .addOnSuccessListener {
+                transacciones.remove(transaccion)
+                adapter.notifyDataSetChanged()
+            }
+            .addOnFailureListener {
+                Log.e("FireStoreDeletionError", "Error deleting transaction:")
+            }
     }
 
     private fun inicializarDrawer() {
@@ -37,7 +104,6 @@ class ActivityInicio : AppCompatActivity(), NavigationView.OnNavigationItemSelec
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         val destino = when (item.itemId) {
             R.id.nav_registro_ingreso -> RegistroIngresosGastos::class.java
-            R.id.nav_historial -> GraficasActivity::class.java
             R.id.nav_ver_gastos -> GraficasActivity::class.java
             R.id.nav_cerrar_sesion -> MainActivity::class.java
             R.id.nav_ver_grafricas -> GraficasActivity::class.java
