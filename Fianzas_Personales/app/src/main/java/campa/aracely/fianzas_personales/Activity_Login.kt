@@ -27,8 +27,6 @@ class Activity_Login : AppCompatActivity() {
         configurarBordesVentana()
         inicializarVistas()
         configurarValidacionCorreo()
-
-        // Inicializar Firebase Auth
         auth = FirebaseAuth.getInstance()
 
         btnIniciarSesion.setOnClickListener {
@@ -109,6 +107,6 @@ class Activity_Login : AppCompatActivity() {
     private fun navegarAPrincipal() {
         val intent = Intent(this, ActivityInicio::class.java)
         startActivity(intent)
-        finish() // Opcional: finaliza esta actividad para que el usuario no pueda volver atrás sin cerrar sesión
+        finish()
     }
 }
