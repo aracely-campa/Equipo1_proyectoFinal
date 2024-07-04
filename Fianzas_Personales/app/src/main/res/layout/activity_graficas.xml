@@ -163,6 +163,15 @@
 
     </GridLayout>
 
-
+    <ImageButton
+        android:id="@+id/btn_volver"
+        android:layout_width="43dp"
+        android:layout_height="47dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Volver"
+        android:src="@drawable/ic_returns"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="668dp" />
 
 </LinearLayout>

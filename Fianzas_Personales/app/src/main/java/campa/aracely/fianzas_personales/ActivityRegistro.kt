@@ -11,6 +11,7 @@ import android.util.Patterns
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -38,7 +39,7 @@ class ActivityRegistro : AppCompatActivity() {
     private lateinit var database: Database
     private lateinit var auth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
-
+    private lateinit var btnVolver: ImageButton
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -49,6 +50,16 @@ class ActivityRegistro : AppCompatActivity() {
         configurarDatePicker()
         configurarValidacionCampos()
         configurarBotonRegistrar()
+
+
+        btnVolver = findViewById(R.id.btn_volver)
+
+        btnVolver.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
     }

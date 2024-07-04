@@ -1,4 +1,4 @@
-package campa.aracely.fianzas_personales.utilities
+package campa.aracely.fianzas_personales.Classes
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,8 +6,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import campa.aracely.fianzas_personales.R
-import java.text.SimpleDateFormat
-import java.util.Locale
 
 class TransaccionAdapter(
     private val transacciones: List<Transaccion>,

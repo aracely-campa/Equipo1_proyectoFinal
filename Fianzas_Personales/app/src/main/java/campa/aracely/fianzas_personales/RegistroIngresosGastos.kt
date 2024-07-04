@@ -1,8 +1,8 @@
 package campa.aracely.fianzas_personales
 
 import android.app.DatePickerDialog
-import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.*
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -23,6 +23,8 @@ class RegistroIngresosGastos : AppCompatActivity() {
     private lateinit var btnRegistrar: Button
     private lateinit var firestore: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
+    private lateinit var btnVolver: ImageButton
+    private var presupuestoActual: Double = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,8 +37,16 @@ class RegistroIngresosGastos : AppCompatActivity() {
         configurarDropdown(actvCategoria, obtenerCategorias())
         configurarDropdown(tipoIngresoGasto, obtenerTiposIngresoGasto())
         configurarBotonRegistrar()
+
         firestore = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
+
+        btnVolver = findViewById(R.id.btn_volver)
+        btnVolver.setOnClickListener {
+            finish()
+        }
+
+        obtenerPresupuestoActual()
     }
 
     private fun configurarBordesVentana() {
@@ -99,6 +109,24 @@ class RegistroIngresosGastos : AppCompatActivity() {
         return listOf(getString(R.string.ingreso), getString(R.string.gasto))
     }
 
+    private fun obtenerPresupuestoActual() {
+        val userId = auth.currentUser?.uid
+        if (userId != null) {
+            firestore.collection("users").document(userId).get()
+                .addOnSuccessListener { document ->
+                    if (document != null) {
+                        presupuestoActual = document.getDouble("presupuesto") ?: 0.0
+                        Log.d("RegistroIngresosGastos", "Presupuesto actual: $presupuestoActual")
+                    } else {
+                        Toast.makeText(this, "No se pudo obtener el presupuesto actual", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    Toast.makeText(this, "Error al obtener el presupuesto: ${exception.message}", Toast.LENGTH_SHORT).show()
+                }
+        }
+    }
+
     private fun configurarBotonRegistrar() {
         btnRegistrar.setOnClickListener {
             if (camposValidos()) {
@@ -107,6 +135,11 @@ class RegistroIngresosGastos : AppCompatActivity() {
                 val categoria = actvCategoria.text.toString()
                 val tipo = tipoIngresoGasto.text.toString()
                 val descripcionText = descripcion.text.toString()
+
+                if (tipo == getString(R.string.gasto) && cantidad > presupuestoActual) {
+                    Toast.makeText(this, "No tienes suficiente dinero para realizar este gasto", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
 
                 val registro = hashMapOf(
                     "cantidad" to cantidad,
@@ -123,8 +156,7 @@ class RegistroIngresosGastos : AppCompatActivity() {
                         .collection("transacciones")
                         .add(registro)
                         .addOnSuccessListener { documentReference ->
-                            Toast.makeText(this, getString(R.string.ingreso_gasto_registrado), Toast.LENGTH_SHORT).show()
-                            startActivity(Intent(this, ActivityInicio::class.java))
+                            actualizarPresupuesto(userId, tipo, cantidad)
                         }
                         .addOnFailureListener { exception ->
                             Toast.makeText(this, "Error al registrar: ${exception.message}", Toast.LENGTH_SHORT).show()
@@ -136,6 +168,24 @@ class RegistroIngresosGastos : AppCompatActivity() {
                 Toast.makeText(this, getString(R.string.mensaje_campos_incompletos), Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun actualizarPresupuesto(userId: String, tipo: String, cantidad: Double) {
+        val nuevoPresupuesto = if (tipo == getString(R.string.ingreso)) {
+            presupuestoActual + cantidad
+        } else {
+            presupuestoActual - cantidad
+        }
+
+        firestore.collection("users").document(userId)
+            .update("presupuesto", nuevoPresupuesto)
+            .addOnSuccessListener {
+                Toast.makeText(this, getString(R.string.ingreso_gasto_registrado), Toast.LENGTH_SHORT).show()
+                finish()
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(this, "Error al actualizar el presupuesto: ${exception.message}", Toast.LENGTH_SHORT).show()
+            }
     }
 
     private fun isValidDouble(text: String): Boolean {

@@ -12,8 +12,9 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import campa.aracely.fianzas_personales.utilities.Transaccion
-import campa.aracely.fianzas_personales.utilities.TransaccionAdapter
+import androidx.recyclerview.widget.RecyclerView.OnScrollListener
+import campa.aracely.fianzas_personales.Classes.Transaccion
+import campa.aracely.fianzas_personales.Classes.TransaccionAdapter
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -48,6 +49,14 @@ class ActivityInicio : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         }
         recyclerView.adapter = adapter
 
+        recyclerView.addOnScrollListener(object : OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val canScrollVertically = recyclerView.canScrollVertically(1) || recyclerView.canScrollVertically(-1)
+                recyclerView.isNestedScrollingEnabled = canScrollVertically
+            }
+        })
+
         cargarTransacciones()
 
         btnPresupuesto.setOnClickListener {
@@ -71,14 +80,13 @@ class ActivityInicio : AppCompatActivity(), NavigationView.OnNavigationItemSelec
 
                 if (snapshot != null && !snapshot.isEmpty) {
                     transacciones.clear()
-                    //Nunca pude hacer que esto lo recibiera directamente de la base de datos
                     var presupuestoTotal = 0.0
                     for (document in snapshot.documents) {
-                        var transaccion = document.toObject(Transaccion::class.java)
+                        val transaccion = document.toObject(Transaccion::class.java)
                         if (transaccion != null) {
                             transaccion.id = document.id
                             transacciones.add(transaccion)
-                            if(transaccion.tipoGasto == "ingreso") {
+                            if (transaccion.tipoGasto == "ingreso") {
                                 presupuestoTotal += transaccion.cantidad
                             } else if (transaccion.tipoGasto == "gasto") {
                                 presupuestoTotal -= transaccion.cantidad
@@ -88,17 +96,22 @@ class ActivityInicio : AppCompatActivity(), NavigationView.OnNavigationItemSelec
                     actualizarPresupuesto(currentUser.uid, presupuestoTotal)
                     adapter.notifyDataSetChanged()
                 }
+                ajustarHabilidadDeDesplazamiento()
             }
         } else {
             Toast.makeText(this, "Usuario no autenticado", Toast.LENGTH_SHORT).show()
         }
     }
 
+    private fun ajustarHabilidadDeDesplazamiento() {
+        recyclerView.isNestedScrollingEnabled = transacciones.size > 1
+    }
+
     private fun actualizarPresupuesto(uid: String, nuevoPresupuesto: Double) {
         firestore.collection("users").document(uid)
             .update("presupuesto", nuevoPresupuesto)
             .addOnCompleteListener { task ->
-                if(task.isSuccessful) {
+                if (task.isSuccessful) {
                     Toast.makeText(this, "Presupuesto actualizado correctamente", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(this, "Error al actualizar el presupuesto", Toast.LENGTH_SHORT).show()
@@ -141,7 +154,6 @@ class ActivityInicio : AppCompatActivity(), NavigationView.OnNavigationItemSelec
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         val destino = when (item.itemId) {
             R.id.nav_registro_ingreso -> RegistroIngresosGastos::class.java
-            R.id.nav_ver_gastos -> GraficasActivity::class.java
             R.id.nav_cerrar_sesion -> MainActivity::class.java
             R.id.nav_ver_grafricas -> GraficasActivity::class.java
             else -> null

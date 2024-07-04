@@ -200,4 +200,17 @@
         android:text="@string/boton_registrarte"
         android:textColor="@color/white"
         android:textStyle="bold" />
+
+    <ImageButton
+        android:id="@+id/btn_volver"
+        android:layout_width="43dp"
+        android:layout_height="47dp"
+        android:layout_centerInParent="true"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Volver"
+        android:src="@drawable/ic_returns"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="668dp"
+        tools:ignore="MissingConstraints" />
+
 </LinearLayout>

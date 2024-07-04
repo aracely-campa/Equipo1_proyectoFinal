@@ -1,4 +1,4 @@
-package campa.aracely.fianzas_personales
+package campa.aracely.fianzas_personales.utilities
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser

@@ -1,6 +1,7 @@
 package campa.aracely.fianzas_personales
 
 import CustomCircleDrawable
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -10,7 +11,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import campa.aracely.fianzas_personales.utilities.Transaccion
+import campa.aracely.fianzas_personales.Classes.Transaccion
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -28,7 +29,7 @@ class GraficasActivity : AppCompatActivity() {
     private lateinit var spinner_categoria: Spinner
     private lateinit var spinner_mes: Spinner
     private lateinit var textoSinDatos: View
-
+    private lateinit var btnVolver: ImageButton
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +48,15 @@ class GraficasActivity : AppCompatActivity() {
         spinner_categoria = findViewById(R.id.spinner_categoria)
         //spinner_mes = findViewById(R.id.spinner_mes)
         graph = findViewById(R.id.graph)
+
+
+        btnVolver = findViewById(R.id.btn_volver)
+
+        btnVolver.setOnClickListener {
+            val intent = Intent(this, ActivityInicio::class.java)
+            startActivity(intent)
+            finish()
+        }
 
 
         configurarSpinners()

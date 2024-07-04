@@ -1,4 +1,4 @@
-package campa.aracely.fianzas_personales.utilities
+package campa.aracely.fianzas_personales.Classes
 
 data class Transaccion(
     var id: String = "",

@@ -174,4 +174,14 @@
         android:text="@string/btn_registro_gasto"
         android:textColor="@color/white"
         android:textStyle="bold" />
+
+
+    <ImageButton
+        android:id="@+id/btn_volver"
+        android:layout_width="43dp"
+        android:layout_height="47dp"
+        android:layout_gravity="left"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Volver"
+        android:src="@drawable/ic_returns" />
 </LinearLayout>
