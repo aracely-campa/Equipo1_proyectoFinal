@@ -7,6 +7,7 @@ import android.text.TextWatcher
 import android.util.Patterns
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -19,7 +20,7 @@ class Activity_Login : AppCompatActivity() {
     private lateinit var etClave: EditText
     private lateinit var btnIniciarSesion: Button
     private lateinit var auth: FirebaseAuth
-
+    private lateinit var tvOlvidasteContrasena: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -34,6 +35,11 @@ class Activity_Login : AppCompatActivity() {
         btnIniciarSesion.setOnClickListener {
             manejarInicioSesion()
         }
+
+        tvOlvidasteContrasena.setOnClickListener {
+            val intent = Intent(this, ActivityRecuperarContrasena::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun configurarBordesVentana() {
@@ -45,6 +51,7 @@ class Activity_Login : AppCompatActivity() {
     }
 
     private fun inicializarVistas() {
+        tvOlvidasteContrasena = findViewById(R.id.tv_olvidaste_contrasena)
         etCorreo = findViewById(R.id.et_correo)
         etClave = findViewById(R.id.et_clave)
         btnIniciarSesion = findViewById(R.id.btn_iniciarSesion)
