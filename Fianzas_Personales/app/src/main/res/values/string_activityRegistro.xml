@@ -2,7 +2,6 @@
 <resources>
     <string name="mensaje_correo_no_valido">Correo electrónico no válido</string>
     <string name="mensaje_error_contraseña">Las contraseñas no coinciden</string>
-    <string name="mensaje_registro_exitoso">Registro éxitoso</string>
     <string name="mensaje_error_edad">Debe ser mayor de edad para registrarte</string>
     <string name="mensaje_error_registrar">Por favor, complete todos los campos correctamente</string>
     <string name="mensaje_valida_contraseña">La contraseña debe tener al menos 6 caracteres</string>
@@ -13,4 +12,7 @@
     <string name="mensaje_error_confirmar_clave">Las contraseñas no coinciden</string>
     <string name="mensaje_error_fecha">La fecha de nacimiento es obligatoria</string>
     <string name="mensaje_error_terminos">Debe aceptar los términos y condiciones</string>
+    <string name="mensaje_registro_exitoso"> Usuario registrado y guardado en Firestore</string>
+    <string name="mensaje_error_firebase"> Error al guardar en Firestore</string>
+    <string name="mensaje_error_registrar_firebase">Error al registrar</string>
 </resources>

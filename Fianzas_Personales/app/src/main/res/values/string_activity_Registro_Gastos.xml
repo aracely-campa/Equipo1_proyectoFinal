@@ -5,4 +5,5 @@
     <string name="mensaje_validacion_categoria">La categoría es obligatoria</string>
     <string name="mensaje_validacion_fecha">La fecha de registro es obligatoria</string>
     <string name="mensaje_validacion_tipo_gasto">El tipo de ingreso o gasto es obligatorio</string>
+    <string name="mensaje_validacion_descripcion">La descripcion es obligatoria</string>
 </resources>

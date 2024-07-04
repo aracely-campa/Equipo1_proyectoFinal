@@ -1,5 +1,6 @@
 package campa.aracely.fianzas_personales
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.icu.util.Calendar
@@ -16,8 +17,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import campa.aracely.fianzas_personales.Database.Database
-import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
@@ -50,8 +49,6 @@ class ActivityRegistro : AppCompatActivity() {
         configurarDatePicker()
         configurarValidacionCampos()
         configurarBotonRegistrar()
-
-        // Inicializar Firebase Auth y Firestore
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
     }
@@ -210,6 +207,7 @@ class ActivityRegistro : AppCompatActivity() {
         return edad
     }
 
+    @SuppressLint("StringFormatInvalid")
     private fun registrarUsuario() {
         val nombre = etNombre.text.toString()
         val apellidos = etApellidos.text.toString()
@@ -234,15 +232,15 @@ class ActivityRegistro : AppCompatActivity() {
                         firestore.collection("users").document(userId)
                             .set(userMap)
                             .addOnSuccessListener {
-                                Toast.makeText(this, "Usuario registrado y guardado en Firestore", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this, getString(R.string.mensaje_registro_exitoso), Toast.LENGTH_SHORT).show()
                                 startActivity(Intent(this, ActivityInicio::class.java))
                             }
                             .addOnFailureListener { e ->
-                                Toast.makeText(this, "Error al guardar en Firestore: ${e.message}", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this, getString(R.string.mensaje_error_firebase, e.message), Toast.LENGTH_SHORT).show()
                             }
                     }
                 } else {
-                    Toast.makeText(this, "Error al registrar: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.mensaje_error_registrar_firebase, task.exception?.message), Toast.LENGTH_SHORT).show()
                 }
             }
     }

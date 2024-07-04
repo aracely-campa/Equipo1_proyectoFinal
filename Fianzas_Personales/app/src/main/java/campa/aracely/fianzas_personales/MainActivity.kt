@@ -11,7 +11,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         val btnIniciarSesion: Button = findViewById(R.id.btn_iniciarSesion)
         btnIniciarSesion.setOnClickListener {
             val intent = Intent(this, Activity_Login::class.java)

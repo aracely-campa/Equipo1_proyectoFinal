@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mensaje_error_transacciones">Error al cargar transacciones:</string>
+    <string name="mensaje_error_usuario_noAutenticado">Usuario no autenticado</string>
+    <string name="mensaje_transaccion_eliminada">Transacción eliminada"</string>
+    <string name="mensaje_error_transaccion">Error al eliminar transacción:</string>
+</resources>

@@ -48,7 +48,7 @@ class RegistroIngresosGastos : AppCompatActivity() {
     }
 
     private fun inicializarVistas() {
-        etFechaNacimiento = findViewById(R.id.et_fecha_nacimiento)
+        etFechaNacimiento = findViewById(R.id.et_fecha_ingreso)
         edCantidad = findViewById(R.id.ed_cantidad_ingreso_gasto)
         actvCategoria = findViewById(R.id.ed_categoria)
         tipoIngresoGasto = findViewById(R.id.ed_tipo_gasto)
@@ -158,7 +158,7 @@ class RegistroIngresosGastos : AppCompatActivity() {
         if (!fechaValida) etFechaNacimiento.error = getString(R.string.mensaje_validacion_fecha)
         if (!categoriaValida) actvCategoria.error = getString(R.string.mensaje_validacion_categoria)
         if (!tipoGastoValido) tipoIngresoGasto.error = getString(R.string.mensaje_validacion_tipo_gasto)
-        if (!descripcionValida) descripcion.error = "getString(R.string.mensaje_validacion_descripcion)"
+        if (!descripcionValida) descripcion.error = getString(R.string.mensaje_validacion_descripcion)
 
         return cantidadValida && fechaValida && categoriaValida && tipoGastoValido && descripcionValida
     }

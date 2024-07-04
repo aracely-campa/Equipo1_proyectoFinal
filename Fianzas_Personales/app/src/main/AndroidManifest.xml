@@ -13,8 +13,6 @@
         android:theme="@style/Theme.Fianzas_Personales"
         tools:targetApi="31">
         <activity
-            android:name=".GraficaLineaActivity"
-            android:exported="true" />
             android:name=".ActivityRecuperarContrasena"
             android:exported="false" />
         <activity
@@ -32,6 +30,7 @@
         <activity
             android:name=".GraficasActivity"
             android:exported="true" />
+
         <activity
             android:name=".Activity_Login"
             android:exported="false" />

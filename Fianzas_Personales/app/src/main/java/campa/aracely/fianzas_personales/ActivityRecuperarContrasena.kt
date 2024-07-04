@@ -76,9 +76,9 @@ class ActivityRecuperarContrasena : AppCompatActivity() {
         auth.sendPasswordResetEmail(correo)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    Toast.makeText(this, "getString(R.string.mensaje_reset_password_exito)", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.mensaje_reset_password_exito), Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(this, "getString(R.string.mensaje_error_reset_password)" + ": " + task.exception?.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.mensaje_error_reset_password) + ": " + task.exception?.message, Toast.LENGTH_SHORT).show()
                 }
             }
     }

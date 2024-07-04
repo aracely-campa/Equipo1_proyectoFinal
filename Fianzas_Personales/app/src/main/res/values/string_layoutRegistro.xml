@@ -6,4 +6,10 @@
     <string name="confirmar_clave">Confirmar contraseña:</string>
     <string name="fecha_nacimiento">Fecha de nacimiento</string>
     <string name="terminos">Acepto términos y condiciones</string>
+    <string name="hint_nombre">Ejemplo: Daniel</string>
+    <string name="hint_apellidos">Ejemplo: Peña Garcia</string>
+    <string name="hint_correo">Ejemplo: dani23@gmail.com</string>
+    <string name="hint_contrasena">Ejemplo: 1Mc_pqx@</string>
+    <string name="hint_fecha">Ejemplo: 01/01/2000</string>
+
 </resources>
