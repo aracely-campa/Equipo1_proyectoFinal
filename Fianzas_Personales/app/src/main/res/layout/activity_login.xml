@@ -86,6 +86,7 @@
         android:layout_marginRight="20dp"
         android:background="@drawable/edit_text_background"
         android:inputType="textPassword"
+        android:hint="@string/hintContra"
         android:padding="10dp"
         android:textColor="@color/black"
         android:textColorHint="#B0BEC5"
@@ -105,24 +106,38 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="80dp"
         android:backgroundTint="@color/azul_claro"
         android:text="@string/boton_iniciarSesion"
         android:textColor="@color/white"
         android:textStyle="bold" />
 
 
-    <TextView
-        android:id="@+id/tv_olvidaste_contrasena"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="¿Olvidaste tu contraseña?"
-        android:layout_below="@id/btn_iniciarSesion"
-        android:layout_marginTop="16dp"
-        android:textColor="@android:color/holo_blue_light"
-        android:clickable="true"
-        android:focusable="true" />
+        android:layout_marginBottom="-66dp"
+        android:background="@drawable/rounded_background"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="26dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
 
+        <TextView
+            android:id="@+id/tv_olvidaste_contrasena"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btn_iniciarSesion"
+            android:layout_gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/olvidarContrasena"
+            android:textColor="@color/rojo_fuerte" />
 
+    </LinearLayout>
 
 </LinearLayout>

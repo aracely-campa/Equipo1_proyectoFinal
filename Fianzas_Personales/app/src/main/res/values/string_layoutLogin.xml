@@ -4,5 +4,7 @@
     <string name="correo">Correo:</string>
     <string name="clave">Contraseña:</string>
     <string name="hintCorreo">ejemplo@gmail.com</string>
-    <string name="hintContra">Contraseña</string>
+    <string name="hintContra">Tu Contraseña</string>
+
+    <string name="olvidarContrasena">¿Olvidaste tu contraseña?</string>
 </resources>

@@ -44,6 +44,7 @@
         android:id="@+id/ed_cantidad_ingreso_gasto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="@string/hint_cantidad"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="1dp"
         android:layout_marginLeft="20dp"
@@ -96,6 +97,7 @@
 
     <AutoCompleteTextView
         android:id="@+id/ed_tipo_gasto"
+        android:hint="@string/hint_tipo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -131,6 +133,7 @@
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:inputType="none"
+        android:hint="@string/hint_fecha_registro"
         android:padding="10dp" />
 
     <TextView
@@ -155,6 +158,8 @@
         android:layout_marginRight="20dp"
         android:background="@drawable/edit_text_background"
         android:padding="50dp"
+        android:textAlignment="center"
+        android:hint="@string/hint_descripcion"
         android:textColor="@color/black"
         android:textColorHint="#B0BEC5" />
 

@@ -14,4 +14,8 @@
     <string name="ingreso">Ingreso</string>
     <string name="gasto">Gasto</string>
     <string name="btn_registro_gasto">Registrar</string>
+    <string name="hint_fecha_registro"> 01/01/2024</string>
+    <string name="hint_tipo"> Ingreso/Gasto</string>
+    <string name="hint_cantidad"> 1000.00</string>
+    <string name="hint_descripcion">Motivo en general el cual realizas este registro</string>
 </resources>

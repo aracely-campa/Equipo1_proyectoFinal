@@ -1,5 +1,6 @@
 package campa.aracely.fianzas_personales
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -48,6 +49,7 @@ class ActivityInicio : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         cargarTransacciones()
     }
 
+    @SuppressLint("StringFormatInvalid")
     private fun cargarTransacciones() {
         val currentUser: FirebaseUser? = auth.currentUser
         if (currentUser != null) {
@@ -57,14 +59,13 @@ class ActivityInicio : AppCompatActivity(), NavigationView.OnNavigationItemSelec
 
             listenerRegistration = transaccionRef.addSnapshotListener { snapshot, error ->
                 if (error != null) {
-                    Toast.makeText(this, "Error al cargar transacciones: ${error.message}", Toast.LENGTH_SHORT).show()
                     return@addSnapshotListener
                 }
 
                 if (snapshot != null && !snapshot.isEmpty) {
                     transacciones.clear()
                     for (document in snapshot.documents) {
-                        var transaccion = document.toObject(Transaccion::class.java)
+                        val transaccion = document.toObject(Transaccion::class.java)
                         if (transaccion != null) {
                             transaccion.id = document.id
                             transacciones.add(transaccion)
@@ -74,10 +75,10 @@ class ActivityInicio : AppCompatActivity(), NavigationView.OnNavigationItemSelec
                 }
             }
         } else {
-            Toast.makeText(this, "Usuario no autenticado", Toast.LENGTH_SHORT).show()
         }
     }
 
+    @SuppressLint("StringFormatInvalid")
     private fun eliminarTransaccion(transaccion: Transaccion) {
         val currentUser: FirebaseUser? = auth.currentUser
         if (currentUser != null) {
@@ -88,11 +89,11 @@ class ActivityInicio : AppCompatActivity(), NavigationView.OnNavigationItemSelec
                 .addOnSuccessListener {
                     transacciones.remove(transaccion)
                     adapter.notifyDataSetChanged()
-                    Toast.makeText(this, "Transacción eliminada", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.mensaje_transaccion_eliminada), Toast.LENGTH_SHORT).show()
                 }
                 .addOnFailureListener { e ->
-                    Log.e("FireStoreDeletionError", "Error al eliminar transacción: ${e.message}")
-                    Toast.makeText(this, "Error al eliminar transacción: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Log.e("FireStoreDeletionError", getString(R.string.mensaje_error_transaccion, e.message))
+                    Toast.makeText(this, getString(R.string.mensaje_error_transaccion, e.message), Toast.LENGTH_SHORT).show()
                 }
         }
     }

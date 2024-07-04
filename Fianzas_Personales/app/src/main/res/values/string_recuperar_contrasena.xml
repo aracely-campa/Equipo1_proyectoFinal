@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mensaje_reset_password_exito">Contraseña recuperada correctamente</string>
+    <string name="mensaje_error_reset_password">Error al recuperar contraseña</string>
+</resources>
