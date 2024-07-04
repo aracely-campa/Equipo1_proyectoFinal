@@ -1,5 +1,6 @@
 package campa.aracely.fianzas_personales.utilities
 
+import java.io.Serializable
 import java.time.LocalDate
 
 class Gastos(
@@ -9,4 +10,4 @@ var color: Int,
 var monto: Float,
 var categoria: String,
 var mes: LocalDate
-)
+): Serializable

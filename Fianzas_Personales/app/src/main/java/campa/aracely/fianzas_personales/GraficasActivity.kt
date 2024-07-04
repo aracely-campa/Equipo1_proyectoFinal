@@ -40,6 +40,8 @@ class GraficasActivity : AppCompatActivity() {
     lateinit var graphFacturas: View
     lateinit var graphOtros: View
     lateinit var botonGuardar: View
+    lateinit var spinner_categoria: Spinner
+    lateinit var textoSinDatos: View
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun fetchingData() {
@@ -51,7 +53,7 @@ class GraficasActivity : AppCompatActivity() {
                 this.lista = parseJson(jsonArray)
                 for (i in lista) {
                     when (i.categoria) {
-                        "@string/dick123" -> alimentos += i.monto
+                        "Alimentos" -> alimentos += i.monto
                         "Transporte" -> transporte += i.monto
                         "Compras" -> compras += i.monto
                         "Facturas" -> facturas += i.monto
@@ -118,7 +120,7 @@ class GraficasActivity : AppCompatActivity() {
         Log.d("porcentajes", "otros $pOtros")
 
         lista.clear()
-        lista.add(Gastos("", pAlimentos, R.color.black, alimentos, "Alimentos", fecha))
+        lista.add(Gastos("", pAlimentos, R.color.azul_fuerte, alimentos, "Alimentos", fecha))
         lista.add(Gastos("", pTransporte, R.color.azul1_1, transporte, "Transporte", fecha))
         lista.add(Gastos("", pCompras, R.color.white, compras, "Compras", fecha))
         lista.add(Gastos("", pFacturas, R.color.azul1_0, facturas, "Facturas", fecha))
@@ -127,7 +129,6 @@ class GraficasActivity : AppCompatActivity() {
         val fondo = CustomCircleDrawable(this, lista)
         graph.background = fondo
     }
-
     @RequiresApi(Build.VERSION_CODES.O)
     fun extraerDatos() {
         alimentos = 0.0F
@@ -146,8 +147,80 @@ class GraficasActivity : AppCompatActivity() {
             }
         }
 
-        actualizarGrafica()
+        // Actualizar la gráfica si hay datos, o mostrar el mensaje si no hay datos
+        if (lista.isEmpty()) {
+            // Mostrar el mensaje en lugar de la gráfica
+            graph.visibility = View.GONE
+            textoSinDatos.visibility = View.VISIBLE // Asume que tienes un TextView con id textoSinDatos en tu layout
+        } else {
+            // Actualizar los montos y la gráfica con los datos actuales
+            actualizarGrafica()
+            graph.visibility = View.VISIBLE
+            textoSinDatos.visibility = View.GONE
+        }
     }
+
+    fun actualizarTextViews(listaFiltrada: List<Gastos>) {
+        val montoAlimentos: TextView = findViewById(R.id.textoAlimentos)
+        val montoTransporte: TextView = findViewById(R.id.textoTransporte)
+        val montoCompras: TextView = findViewById(R.id.textoCompras)
+        val montoFacturas: TextView = findViewById(R.id.textoFacturas)
+        val montoOtros: TextView = findViewById(R.id.textoOtros)
+
+        var alimentos = 0.0F
+        var transporte = 0.0F
+        var compras = 0.0F
+        var facturas = 0.0F
+        var otros = 0.0F
+
+        for (gasto in listaFiltrada) {
+            when (gasto.categoria) {
+                "Alimentos" -> alimentos += gasto.monto
+                "Transporte" -> transporte += gasto.monto
+                "Compras" -> compras += gasto.monto
+                "Facturas" -> facturas += gasto.monto
+                "Otros" -> otros += gasto.monto
+            }
+        }
+
+        montoAlimentos.text = "$alimentos"
+        montoTransporte.text = "$transporte"
+        montoCompras.text = "$compras"
+        montoFacturas.text = "$facturas"
+        montoOtros.text = "$otros"
+    }
+
+
+
+    fun filtrarCategoria() {
+        val categoriaSeleccionada = spinner_categoria.selectedItem.toString().toLowerCase().capitalize()
+        println(categoriaSeleccionada)
+
+        val listaFiltrada = if (categoriaSeleccionada == "---") {
+            lista  // Mostrar todos los elementos
+        } else {
+            lista.filter { it.categoria == categoriaSeleccionada }  // Filtrar por categoría
+
+        }
+        actualizarTextViews(listaFiltrada)
+        asignarColor()  // Asigna colores a los elementos filtrados
+
+        val fondo = CustomCircleDrawable(this, ArrayList(listaFiltrada))
+        graph.background = fondo
+    }
+
+    fun asignarColor() {
+        for (i in lista) {
+            when (i.categoria) {
+                "Alimentos" -> i.color = R.color.azul_fuerte
+                "Transporte" -> i.color = R.color.azul1_1
+                "Compras" -> i.color = R.color.white
+                "Facturas" -> i.color = R.color.azul1_0
+                "Otros" -> i.color = R.color.rojo_fuerte
+            }
+        }
+    }
+
 
     fun guardar() {
         val jsonArray = JSONArray()
@@ -180,14 +253,17 @@ class GraficasActivity : AppCompatActivity() {
         val montoCompras: TextView = findViewById(R.id.textoCompras)
         val montoFacturas: TextView = findViewById(R.id.textoFacturas)
         val montoOtros: TextView = findViewById(R.id.textoOtros)
-        val prueba: Button = findViewById(R.id.prueba)
+
         val spinner_mes: Spinner = findViewById(R.id.spinner_mes)
-        val spinner_categoria: Spinner = findViewById(R.id.spinner_categoria)
+        textoSinDatos = findViewById(R.id.textoSinDatos)
+        spinner_categoria = findViewById(R.id.spinner_categoria)
+
         graph = findViewById(R.id.graph)
 
         botonGuardar = findViewById(R.id.guardar)
 
         val meses = listOf(
+            "---",
             getString(R.string.enero),
             getString(R.string.febrero),
             getString(R.string.marzo),
@@ -202,6 +278,7 @@ class GraficasActivity : AppCompatActivity() {
             getString(R.string.diciembre)
         )
         val categorias = listOf(
+            "---",
             getString(R.string.alimentos),
             getString(R.string.compras),
             getString(R.string.transportes),
@@ -227,15 +304,18 @@ class GraficasActivity : AppCompatActivity() {
         spinner_categoria.adapter = adapter2
         spinner_categoria.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, id: Long) {
-                val selectedItem = categorias[position]
+                filtrarCategoria()
 
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         }
-
+       actualizarGrafica()
+        extraerDatos()
         fetchingData()
+        filtrarCategoria()
+        asignarColor()
         if (data) {
             extraerDatos()
             montoAlimentos.text = "$alimentos"
@@ -243,6 +323,7 @@ class GraficasActivity : AppCompatActivity() {
             montoCompras.text = "$compras"
             montoFacturas.text = "$facturas"
             montoOtros.text = "$otros"
+
         } else {
             extraerDatos()
             montoAlimentos.text = "$alimentos"
@@ -250,6 +331,7 @@ class GraficasActivity : AppCompatActivity() {
             montoCompras.text = "$compras"
             montoFacturas.text = "$facturas"
             montoOtros.text = "$otros"
+
         }
 
         botonGuardar.setOnClickListener {
@@ -261,11 +343,6 @@ class GraficasActivity : AppCompatActivity() {
             montoFacturas.text = "$facturas"
             montoOtros.text = "$otros"
         }
-
-        prueba.setOnClickListener {
-            lista.add(Gastos("", 5.0f, R.color.black, 5.0f, "Compras", LocalDate.now()))
-            lista.add(Gastos("", 5.0f, R.color.black, 5.0f, "Facturas", LocalDate.now()))
-            extraerDatos()
-        }
+        
     }
 }
