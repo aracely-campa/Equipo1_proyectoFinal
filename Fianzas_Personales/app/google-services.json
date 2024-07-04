@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "302984941051",
+    "project_id": "proyecto-moviles-896f7",
+    "storage_bucket": "proyecto-moviles-896f7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:302984941051:android:70ad11647053c117134f5e",
+        "android_client_info": {
+          "package_name": "campa.aracely.fianzas_personales"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEfhE4LpAi-YXbW2fzW8qcLtDZ7gQms4E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:302984941051:android:129dfcf76cf0e13a134f5e",
+        "android_client_info": {
+          "package_name": "campa.aracely.finanzas_personales"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEfhE4LpAi-YXbW2fzW8qcLtDZ7gQms4E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

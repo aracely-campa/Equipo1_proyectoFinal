@@ -12,11 +12,13 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.auth.FirebaseAuth
 
 class Activity_Login : AppCompatActivity() {
     private lateinit var etCorreo: EditText
     private lateinit var etClave: EditText
     private lateinit var btnIniciarSesion: Button
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +27,9 @@ class Activity_Login : AppCompatActivity() {
         configurarBordesVentana()
         inicializarVistas()
         configurarValidacionCorreo()
+
+        // Inicializar Firebase Auth
+        auth = FirebaseAuth.getInstance()
 
         btnIniciarSesion.setOnClickListener {
             manejarInicioSesion()
@@ -70,8 +75,18 @@ class Activity_Login : AppCompatActivity() {
 
     private fun manejarInicioSesion() {
         if (camposValidos()) {
-            Toast.makeText(this, getString(R.string.mensaje_inicio_sesion), Toast.LENGTH_SHORT).show()
-            navegarAPrincipal()
+            val correo = etCorreo.text.toString()
+            val clave = etClave.text.toString()
+
+            auth.signInWithEmailAndPassword(correo, clave)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(this, getString(R.string.mensaje_inicio_sesion), Toast.LENGTH_SHORT).show()
+                        navegarAPrincipal()
+                    } else {
+                        Toast.makeText(this, getString(R.string.mensaje_error_inicio_sesion) + ": " + task.exception?.message, Toast.LENGTH_SHORT).show()
+                    }
+                }
         } else {
             Toast.makeText(this, getString(R.string.mensaje_error_inicio_sesion), Toast.LENGTH_SHORT).show()
         }
@@ -94,5 +109,6 @@ class Activity_Login : AppCompatActivity() {
     private fun navegarAPrincipal() {
         val intent = Intent(this, ActivityInicio::class.java)
         startActivity(intent)
+        finish() // Opcional: finaliza esta actividad para que el usuario no pueda volver atrás sin cerrar sesión
     }
 }

@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.google.gms.google.services)
+
 }
 
 // Esta sección ya no es necesaria en build.gradle.kts
@@ -45,8 +47,6 @@ android {
 }
 
 dependencies {
-    // implementation("org.quanqi: android-holo-graph:0.1.0")
-    //implementation("com.github.tehras:charts:0.2.4-alpha")
     implementation("com.github.PhilJay:MPAndroidChart:v2.0.9")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -58,6 +58,8 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.androidx.runtime.android)
+    implementation(libs.firebase.firestore)
+    implementation(libs.firebase.auth)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
