@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cuanto_dinero">¿Cuánto dinero tiene?</string>
+    <string name="btn_registrar_dinero">Registrar cantidad</string>
+</resources>

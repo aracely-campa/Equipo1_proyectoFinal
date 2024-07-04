@@ -40,5 +40,6 @@
         android:id="@+id/btn_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/azul_claro"
         android:text="Eliminar" />
 </LinearLayout>

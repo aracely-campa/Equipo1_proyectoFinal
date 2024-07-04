@@ -1,10 +1,10 @@
 package campa.aracely.fianzas_personales
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -29,6 +29,7 @@ class ActivityInicio : AppCompatActivity(), NavigationView.OnNavigationItemSelec
     private lateinit var firestore: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
     private var listenerRegistration: ListenerRegistration? = null
+    private lateinit var btnPresupuesto: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +39,7 @@ class ActivityInicio : AppCompatActivity(), NavigationView.OnNavigationItemSelec
 
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
+        btnPresupuesto = findViewById(R.id.btn_presupuesto)
 
         recyclerView = findViewById(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -47,9 +49,13 @@ class ActivityInicio : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         recyclerView.adapter = adapter
 
         cargarTransacciones()
+
+        btnPresupuesto.setOnClickListener {
+            val intent = Intent(this, PresupuestoActivity::class.java)
+            startActivity(intent)
+        }
     }
 
-    @SuppressLint("StringFormatInvalid")
     private fun cargarTransacciones() {
         val currentUser: FirebaseUser? = auth.currentUser
         if (currentUser != null) {
@@ -59,28 +65,47 @@ class ActivityInicio : AppCompatActivity(), NavigationView.OnNavigationItemSelec
 
             listenerRegistration = transaccionRef.addSnapshotListener { snapshot, error ->
                 if (error != null) {
-                    Toast.makeText(this, getString(R.string.mensaje_error_transacciones, error.message), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Error al cargar transacciones: ${error.message}", Toast.LENGTH_SHORT).show()
                     return@addSnapshotListener
                 }
 
                 if (snapshot != null && !snapshot.isEmpty) {
                     transacciones.clear()
+                    //Nunca pude hacer que esto lo recibiera directamente de la base de datos
+                    var presupuestoTotal = 0.0
                     for (document in snapshot.documents) {
-                        val transaccion = document.toObject(Transaccion::class.java)
+                        var transaccion = document.toObject(Transaccion::class.java)
                         if (transaccion != null) {
                             transaccion.id = document.id
                             transacciones.add(transaccion)
+                            if(transaccion.tipoGasto == "ingreso") {
+                                presupuestoTotal += transaccion.cantidad
+                            } else if (transaccion.tipoGasto == "gasto") {
+                                presupuestoTotal -= transaccion.cantidad
+                            }
                         }
                     }
+                    actualizarPresupuesto(currentUser.uid, presupuestoTotal)
                     adapter.notifyDataSetChanged()
                 }
             }
         } else {
-            Toast.makeText(this, getString(R.string.mensaje_error_usuario_noAutenticado), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Usuario no autenticado", Toast.LENGTH_SHORT).show()
         }
     }
 
-    @SuppressLint("StringFormatInvalid")
+    private fun actualizarPresupuesto(uid: String, nuevoPresupuesto: Double) {
+        firestore.collection("users").document(uid)
+            .update("presupuesto", nuevoPresupuesto)
+            .addOnCompleteListener { task ->
+                if(task.isSuccessful) {
+                    Toast.makeText(this, "Presupuesto actualizado correctamente", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "Error al actualizar el presupuesto", Toast.LENGTH_SHORT).show()
+                }
+            }
+    }
+
     private fun eliminarTransaccion(transaccion: Transaccion) {
         val currentUser: FirebaseUser? = auth.currentUser
         if (currentUser != null) {
@@ -91,11 +116,11 @@ class ActivityInicio : AppCompatActivity(), NavigationView.OnNavigationItemSelec
                 .addOnSuccessListener {
                     transacciones.remove(transaccion)
                     adapter.notifyDataSetChanged()
-                    Toast.makeText(this, getString(R.string.mensaje_transaccion_eliminada), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Transacción eliminada", Toast.LENGTH_SHORT).show()
                 }
                 .addOnFailureListener { e ->
-                    Log.e("FireStoreDeletionError", getString(R.string.mensaje_error_transaccion, e.message))
-                    Toast.makeText(this, getString(R.string.mensaje_error_transaccion, e.message), Toast.LENGTH_SHORT).show()
+                    Log.e("FireStoreDeletionError", "Error al eliminar transacción: ${e.message}")
+                    Toast.makeText(this, "Error al eliminar transacción: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
         }
     }
