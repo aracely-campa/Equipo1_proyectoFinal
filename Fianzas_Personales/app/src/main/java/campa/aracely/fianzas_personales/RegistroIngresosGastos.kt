@@ -1,4 +1,5 @@
 package campa.aracely.fianzas_personales
+
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +8,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.*
@@ -17,8 +19,10 @@ class RegistroIngresosGastos : AppCompatActivity() {
     private lateinit var etFechaNacimiento: EditText
     private lateinit var actvCategoria: AutoCompleteTextView
     private lateinit var tipoIngresoGasto: AutoCompleteTextView
+    private lateinit var descripcion: EditText
     private lateinit var btnRegistrar: Button
     private lateinit var firestore: FirebaseFirestore
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +36,7 @@ class RegistroIngresosGastos : AppCompatActivity() {
         configurarDropdown(tipoIngresoGasto, obtenerTiposIngresoGasto())
         configurarBotonRegistrar()
         firestore = FirebaseFirestore.getInstance()
+        auth = FirebaseAuth.getInstance()
     }
 
     private fun configurarBordesVentana() {
@@ -47,6 +52,7 @@ class RegistroIngresosGastos : AppCompatActivity() {
         edCantidad = findViewById(R.id.ed_cantidad_ingreso_gasto)
         actvCategoria = findViewById(R.id.ed_categoria)
         tipoIngresoGasto = findViewById(R.id.ed_tipo_gasto)
+        descripcion = findViewById(R.id.ed_descripcion_ingreso)
         btnRegistrar = findViewById(R.id.btn_registrar_ingreso_gasto)
     }
 
@@ -100,27 +106,32 @@ class RegistroIngresosGastos : AppCompatActivity() {
                 val fecha = etFechaNacimiento.text.toString()
                 val categoria = actvCategoria.text.toString()
                 val tipo = tipoIngresoGasto.text.toString()
+                val descripcionText = descripcion.text.toString()
 
                 val registro = hashMapOf(
                     "cantidad" to cantidad,
                     "fecha" to fecha,
                     "categoria" to categoria,
-                    "tipo" to tipo
+                    "tipoGasto" to tipo,
+                    "descripcion" to descripcionText
                 )
 
-                firestore.collection("ingresos_gastos")
-                    .add(registro)
-                    .addOnSuccessListener { documentReference ->
-                        Toast.makeText(this, getString(R.string.ingreso_gasto_registrado),
-                            Toast.LENGTH_SHORT).show()
+                val userId = auth.currentUser?.uid
 
-                        startActivity(Intent(this, ActivityInicio::class.java))
-                    }
-                    .addOnFailureListener { exception ->
-                        Toast.makeText(this, "Error al registrar: ${exception.message}",
-                            Toast.LENGTH_SHORT).show()
-                    }
-
+                if (userId != null) {
+                    firestore.collection("users").document(userId)
+                        .collection("transacciones")
+                        .add(registro)
+                        .addOnSuccessListener { documentReference ->
+                            Toast.makeText(this, getString(R.string.ingreso_gasto_registrado), Toast.LENGTH_SHORT).show()
+                            startActivity(Intent(this, ActivityInicio::class.java))
+                        }
+                        .addOnFailureListener { exception ->
+                            Toast.makeText(this, "Error al registrar: ${exception.message}", Toast.LENGTH_SHORT).show()
+                        }
+                } else {
+                    Toast.makeText(this, "Error al obtener el ID del usuario", Toast.LENGTH_SHORT).show()
+                }
             } else {
                 Toast.makeText(this, getString(R.string.mensaje_campos_incompletos), Toast.LENGTH_SHORT).show()
             }
@@ -140,23 +151,15 @@ class RegistroIngresosGastos : AppCompatActivity() {
         val cantidadValida = edCantidad.text.isNotEmpty() && isValidDouble(edCantidad.text.toString())
         val fechaValida = etFechaNacimiento.text.isNotEmpty()
         val categoriaValida = actvCategoria.text.isNotEmpty()
-        val tipoValido = tipoIngresoGasto.text.isNotEmpty()
+        val tipoGastoValido = tipoIngresoGasto.text.isNotEmpty()
+        val descripcionValida = descripcion.text.isNotEmpty()
 
         if (!cantidadValida) edCantidad.error = getString(R.string.mensaje_validacion_cantidad)
         if (!fechaValida) etFechaNacimiento.error = getString(R.string.mensaje_validacion_fecha)
         if (!categoriaValida) actvCategoria.error = getString(R.string.mensaje_validacion_categoria)
-        if (!tipoValido) tipoIngresoGasto.error = getString(R.string.mensaje_validacion_tipo_gasto)
+        if (!tipoGastoValido) tipoIngresoGasto.error = getString(R.string.mensaje_validacion_tipo_gasto)
+        if (!descripcionValida) descripcion.error = "getString(R.string.mensaje_validacion_descripcion)"
 
-        return cantidadValida && fechaValida && categoriaValida && tipoValido
+        return cantidadValida && fechaValida && categoriaValida && tipoGastoValido && descripcionValida
     }
-
-    //private fun registrarIngresoGasto() {
-    //    val fecha = etFechaNacimiento.text.toString()
-    //    val categoria = actvCategoria.text.toString()
-    //    val cantidad = edCantidad.text.toString().toDouble()
-    //    val tipo = tipoIngresoGasto.text.toString()
-    //    val intent = Intent(this, ActivityHistorial::class.java)
-    //    startActivity(intent)
-    //    finish()
-    //}
 }

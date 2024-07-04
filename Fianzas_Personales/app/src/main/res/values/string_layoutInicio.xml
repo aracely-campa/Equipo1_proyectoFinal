@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="bienvenido">Bienvenido</string>
+    <string name="historial">Historial de transacciones</string>
+    <string name="btn_nueva">Nueva</string>
+    <string name="btn_presupuesto">Haz tu presupuesto</string>
 </resources>
