@@ -120,11 +120,11 @@ class GraficasActivity : AppCompatActivity() {
         Log.d("porcentajes", "otros $pOtros")
 
         lista.clear()
-        lista.add(Gastos("", pAlimentos, R.color.azul_fuerte, alimentos, "Alimentos", fecha))
-        lista.add(Gastos("", pTransporte, R.color.azul1_1, transporte, "Transporte", fecha))
-        lista.add(Gastos("", pCompras, R.color.white, compras, "Compras", fecha))
-        lista.add(Gastos("", pFacturas, R.color.azul1_0, facturas, "Facturas", fecha))
-        lista.add(Gastos("", pOtros, R.color.rojo_fuerte, otros, "Otros", fecha))
+        lista.add(Gastos("", pAlimentos, R.color.ColorAlimentos, alimentos, "Alimentos", fecha))
+        lista.add(Gastos("", pTransporte, R.color.ColorTransporte, transporte, "Transporte", fecha))
+        lista.add(Gastos("", pCompras, R.color.ColorCompras, compras, "Compras", fecha))
+        lista.add(Gastos("", pFacturas, R.color.ColorFacturas, facturas, "Facturas", fecha))
+        lista.add(Gastos("", pOtros, R.color.ColorOtros, otros, "Otros", fecha))
 
         val fondo = CustomCircleDrawable(this, lista)
         graph.background = fondo
@@ -212,11 +212,11 @@ class GraficasActivity : AppCompatActivity() {
     fun asignarColor() {
         for (i in lista) {
             when (i.categoria) {
-                "Alimentos" -> i.color = R.color.azul_fuerte
-                "Transporte" -> i.color = R.color.azul1_1
-                "Compras" -> i.color = R.color.white
-                "Facturas" -> i.color = R.color.azul1_0
-                "Otros" -> i.color = R.color.rojo_fuerte
+                "Alimentos" -> i.color = R.color.ColorAlimentos
+                "Transporte" -> i.color = R.color.ColorTransporte
+                "Compras" -> i.color = R.color.ColorCompras
+                "Facturas" -> i.color = R.color.ColorFacturas
+                "Otros" -> i.color = R.color.ColorOtros
             }
         }
     }
@@ -253,7 +253,6 @@ class GraficasActivity : AppCompatActivity() {
         val montoCompras: TextView = findViewById(R.id.textoCompras)
         val montoFacturas: TextView = findViewById(R.id.textoFacturas)
         val montoOtros: TextView = findViewById(R.id.textoOtros)
-
         val spinner_mes: Spinner = findViewById(R.id.spinner_mes)
         textoSinDatos = findViewById(R.id.textoSinDatos)
         spinner_categoria = findViewById(R.id.spinner_categoria)
@@ -311,7 +310,13 @@ class GraficasActivity : AppCompatActivity() {
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         }
-       actualizarGrafica()
+        lista.add(Gastos("", 5.0f, R.color.azul_claro, 5.0f, "Compras", LocalDate.now()))
+        lista.add(Gastos("", 5.0f, R.color.black, 5.0f, "Facturas", LocalDate.now()))
+        lista.add(Gastos("", 5.0f, R.color.azul_claro, 5.0f, "Alimentos", LocalDate.now()))
+        lista.add(Gastos("", 5.0f, R.color.black, 5.0f, "Transporte", LocalDate.now()))
+        lista.add(Gastos("", 5.0f, R.color.black, 5.0f, "Otros", LocalDate.now()))
+
+        actualizarGrafica()
         extraerDatos()
         fetchingData()
         filtrarCategoria()
@@ -343,6 +348,6 @@ class GraficasActivity : AppCompatActivity() {
             montoFacturas.text = "$facturas"
             montoOtros.text = "$otros"
         }
-        
+
     }
 }

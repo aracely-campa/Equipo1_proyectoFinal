@@ -10,4 +10,10 @@
     <color name="azul_claro">#56C2C7</color>
     <color name="azul_fuerte">#457B9D</color>
     <color name="azul_marino">#1D3557</color>
+
+    <color name="ColorAlimentos">#7CFD7E</color>
+    <color name="ColorTransporte">#A6FF00</color>
+    <color name="ColorCompras">#F77F00</color>
+    <color name="ColorFacturas">#FCBF49</color>
+    <color name="ColorOtros">#EAE2B7</color>
 </resources>
