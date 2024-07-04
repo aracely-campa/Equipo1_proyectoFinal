@@ -1,5 +1,4 @@
 package campa.aracely.fianzas_personales
-
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
@@ -8,16 +7,18 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.*
 
 class RegistroIngresosGastos : AppCompatActivity() {
 
     private lateinit var edCantidad: EditText
-    private lateinit var et_fecha_registro: EditText
+    private lateinit var etFechaNacimiento: EditText
     private lateinit var actvCategoria: AutoCompleteTextView
     private lateinit var tipoIngresoGasto: AutoCompleteTextView
     private lateinit var btnRegistrar: Button
+    private lateinit var firestore: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +31,7 @@ class RegistroIngresosGastos : AppCompatActivity() {
         configurarDropdown(actvCategoria, obtenerCategorias())
         configurarDropdown(tipoIngresoGasto, obtenerTiposIngresoGasto())
         configurarBotonRegistrar()
+        firestore = FirebaseFirestore.getInstance()
     }
 
     private fun configurarBordesVentana() {
@@ -41,7 +43,7 @@ class RegistroIngresosGastos : AppCompatActivity() {
     }
 
     private fun inicializarVistas() {
-        et_fecha_registro = findViewById(R.id.et_fecha_nacimiento)
+        etFechaNacimiento = findViewById(R.id.et_fecha_nacimiento)
         edCantidad = findViewById(R.id.ed_cantidad_ingreso_gasto)
         actvCategoria = findViewById(R.id.ed_categoria)
         tipoIngresoGasto = findViewById(R.id.ed_tipo_gasto)
@@ -57,10 +59,10 @@ class RegistroIngresosGastos : AppCompatActivity() {
 
             val dateFormat = "dd/MM/yyyy"
             val sdf = SimpleDateFormat(dateFormat, Locale.US)
-            et_fecha_registro.setText(sdf.format(calendar.time))
+            etFechaNacimiento.setText(sdf.format(calendar.time))
         }
 
-        et_fecha_registro.setOnClickListener {
+        etFechaNacimiento.setOnClickListener {
             DatePickerDialog(
                 this,
                 dateSetListener,
@@ -94,7 +96,31 @@ class RegistroIngresosGastos : AppCompatActivity() {
     private fun configurarBotonRegistrar() {
         btnRegistrar.setOnClickListener {
             if (camposValidos()) {
-                registrarIngresoGasto()
+                val cantidad = edCantidad.text.toString().toDouble()
+                val fecha = etFechaNacimiento.text.toString()
+                val categoria = actvCategoria.text.toString()
+                val tipo = tipoIngresoGasto.text.toString()
+
+                val registro = hashMapOf(
+                    "cantidad" to cantidad,
+                    "fecha" to fecha,
+                    "categoria" to categoria,
+                    "tipo" to tipo
+                )
+
+                firestore.collection("ingresos_gastos")
+                    .add(registro)
+                    .addOnSuccessListener { documentReference ->
+                        Toast.makeText(this, getString(R.string.ingreso_gasto_registrado),
+                            Toast.LENGTH_SHORT).show()
+
+                        startActivity(Intent(this, ActivityInicio::class.java))
+                    }
+                    .addOnFailureListener { exception ->
+                        Toast.makeText(this, "Error al registrar: ${exception.message}",
+                            Toast.LENGTH_SHORT).show()
+                    }
+
             } else {
                 Toast.makeText(this, getString(R.string.mensaje_campos_incompletos), Toast.LENGTH_SHORT).show()
             }
@@ -112,25 +138,25 @@ class RegistroIngresosGastos : AppCompatActivity() {
 
     private fun camposValidos(): Boolean {
         val cantidadValida = edCantidad.text.isNotEmpty() && isValidDouble(edCantidad.text.toString())
-        val fechaValida = et_fecha_registro.text.isNotEmpty()
+        val fechaValida = etFechaNacimiento.text.isNotEmpty()
         val categoriaValida = actvCategoria.text.isNotEmpty()
         val tipoValido = tipoIngresoGasto.text.isNotEmpty()
 
         if (!cantidadValida) edCantidad.error = getString(R.string.mensaje_validacion_cantidad)
-        if (!fechaValida) et_fecha_registro.error = getString(R.string.mensaje_validacion_fecha)
+        if (!fechaValida) etFechaNacimiento.error = getString(R.string.mensaje_validacion_fecha)
         if (!categoriaValida) actvCategoria.error = getString(R.string.mensaje_validacion_categoria)
         if (!tipoValido) tipoIngresoGasto.error = getString(R.string.mensaje_validacion_tipo_gasto)
 
         return cantidadValida && fechaValida && categoriaValida && tipoValido
     }
 
-    private fun registrarIngresoGasto() {
-        val fecha = et_fecha_registro.text.toString()
-        val categoria = actvCategoria.text.toString()
-        val cantidad = edCantidad.text.toString().toDouble()
-        val tipo = tipoIngresoGasto.text.toString()
-        val intent = Intent(this, ActivityHistorial::class.java)
-        startActivity(intent)
-        finish()
-    }
+    //private fun registrarIngresoGasto() {
+    //    val fecha = etFechaNacimiento.text.toString()
+    //    val categoria = actvCategoria.text.toString()
+    //    val cantidad = edCantidad.text.toString().toDouble()
+    //    val tipo = tipoIngresoGasto.text.toString()
+    //    val intent = Intent(this, ActivityHistorial::class.java)
+    //    startActivity(intent)
+    //    finish()
+    //}
 }
