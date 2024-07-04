@@ -16,4 +16,9 @@
     <color name="ColorCompras">#F77F00</color>
     <color name="ColorFacturas">#FCBF49</color>
     <color name="ColorOtros">#EAE2B7</color>
+
+    <color name="blue">#0019FF</color>
+    <color name="green">#37FF00</color>
+    <color name="orange">#FF5900</color>
+    <color name="red">#FF0015</color>
 </resources>
