@@ -8,6 +8,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.*
@@ -21,6 +22,7 @@ class RegistroIngresosGastos : AppCompatActivity() {
     private lateinit var descripcion: EditText
     private lateinit var btnRegistrar: Button
     private lateinit var firestore: FirebaseFirestore
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +36,7 @@ class RegistroIngresosGastos : AppCompatActivity() {
         configurarDropdown(tipoIngresoGasto, obtenerTiposIngresoGasto())
         configurarBotonRegistrar()
         firestore = FirebaseFirestore.getInstance()
+        auth = FirebaseAuth.getInstance()
     }
 
     private fun configurarBordesVentana() {
@@ -113,19 +116,22 @@ class RegistroIngresosGastos : AppCompatActivity() {
                     "descripcion" to descripcionText
                 )
 
-                firestore.collection("gastos")
-                    .add(registro)
-                    .addOnSuccessListener { documentReference ->
-                        Toast.makeText(this, getString(R.string.ingreso_gasto_registrado),
-                            Toast.LENGTH_SHORT).show()
+                val userId = auth.currentUser?.uid
 
-                        startActivity(Intent(this, ActivityInicio::class.java))
-                    }
-                    .addOnFailureListener { exception ->
-                        Toast.makeText(this, "Error al registrar: ${exception.message}",
-                            Toast.LENGTH_SHORT).show()
-                    }
-
+                if (userId != null) {
+                    firestore.collection("users").document(userId)
+                        .collection("transacciones")
+                        .add(registro)
+                        .addOnSuccessListener { documentReference ->
+                            Toast.makeText(this, getString(R.string.ingreso_gasto_registrado), Toast.LENGTH_SHORT).show()
+                            startActivity(Intent(this, ActivityInicio::class.java))
+                        }
+                        .addOnFailureListener { exception ->
+                            Toast.makeText(this, "Error al registrar: ${exception.message}", Toast.LENGTH_SHORT).show()
+                        }
+                } else {
+                    Toast.makeText(this, "Error al obtener el ID del usuario", Toast.LENGTH_SHORT).show()
+                }
             } else {
                 Toast.makeText(this, getString(R.string.mensaje_campos_incompletos), Toast.LENGTH_SHORT).show()
             }

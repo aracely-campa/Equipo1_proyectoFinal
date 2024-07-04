@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class Activity_Login : AppCompatActivity() {
     private lateinit var etCorreo: EditText
@@ -21,6 +22,8 @@ class Activity_Login : AppCompatActivity() {
     private lateinit var btnIniciarSesion: Button
     private lateinit var auth: FirebaseAuth
     private lateinit var tvOlvidasteContrasena: TextView
+    private lateinit var firestore: FirebaseFirestore
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -28,7 +31,7 @@ class Activity_Login : AppCompatActivity() {
         configurarBordesVentana()
         inicializarVistas()
         configurarValidacionCorreo()
-
+        firestore = FirebaseFirestore.getInstance()
         // Inicializar Firebase Auth
         auth = FirebaseAuth.getInstance()
 
@@ -89,6 +92,7 @@ class Activity_Login : AppCompatActivity() {
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         Toast.makeText(this, getString(R.string.mensaje_inicio_sesion), Toast.LENGTH_SHORT).show()
+                        AuthManager.refreshUser()
                         navegarAPrincipal()
                     } else {
                         Toast.makeText(this, getString(R.string.mensaje_error_inicio_sesion) + ": " + task.exception?.message, Toast.LENGTH_SHORT).show()
@@ -112,6 +116,7 @@ class Activity_Login : AppCompatActivity() {
 
         return correoValido && claveValida
     }
+
 
     private fun navegarAPrincipal() {
         val intent = Intent(this, ActivityInicio::class.java)
