@@ -59,6 +59,7 @@ class ActivityInicio : AppCompatActivity(), NavigationView.OnNavigationItemSelec
 
             listenerRegistration = transaccionRef.addSnapshotListener { snapshot, error ->
                 if (error != null) {
+                    Toast.makeText(this, getString(R.string.mensaje_error_transacciones, error.message), Toast.LENGTH_SHORT).show()
                     return@addSnapshotListener
                 }
 
@@ -75,6 +76,7 @@ class ActivityInicio : AppCompatActivity(), NavigationView.OnNavigationItemSelec
                 }
             }
         } else {
+            Toast.makeText(this, getString(R.string.mensaje_error_usuario_noAutenticado), Toast.LENGTH_SHORT).show()
         }
     }
 
