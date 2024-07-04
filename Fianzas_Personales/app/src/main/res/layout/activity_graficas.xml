@@ -31,13 +31,6 @@
     android:gravity="center"
     android:layout_marginTop="30dp"
     >
-    <Spinner
-        android:id="@+id/spinner_mes"
-        android:layout_width="160dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:outlineAmbientShadowColor="@color/white"
-        android:spinnerMode="dialog"/>
 
     <Spinner
         android:id="@+id/spinner_categoria"

@@ -45,7 +45,7 @@ class GraficasActivity : AppCompatActivity() {
         val montoOtros: TextView = findViewById(R.id.textoOtros)
         textoSinDatos = findViewById(R.id.textoSinDatos)
         spinner_categoria = findViewById(R.id.spinner_categoria)
-        spinner_mes = findViewById(R.id.spinner_mes)
+        //spinner_mes = findViewById(R.id.spinner_mes)
         graph = findViewById(R.id.graph)
 
 
@@ -101,7 +101,7 @@ class GraficasActivity : AppCompatActivity() {
                         "Ingreso" -> ingresosAlimentos += gasto.cantidad
                     }
                 }
-                "TRANSPORTE" -> {
+                "TRANSPORTES" -> {
                     when (gasto.tipoGasto) {
                         "Gasto" -> transporte += gasto.cantidad
                         "Ingreso" -> ingresosTransporte += gasto.cantidad
@@ -186,7 +186,7 @@ class GraficasActivity : AppCompatActivity() {
 
         val data = listOf(
             Triple(pAlimentos, ContextCompat.getColor(this, R.color.ColorAlimentos), "Alimentos"),
-            Triple(pTransporte, ContextCompat.getColor(this, R.color.ColorTransporte), "Transporte"),
+            Triple(pTransporte, ContextCompat.getColor(this, R.color.ColorTransporte), "Transportes"),
             Triple(pCompras, ContextCompat.getColor(this, R.color.ColorCompras), "Compras"),
             Triple(pFacturas, ContextCompat.getColor(this, R.color.ColorFacturas), "Facturas"),
             Triple(pOtros, ContextCompat.getColor(this, R.color.ColorOtros), "Otros")
@@ -223,17 +223,6 @@ class GraficasActivity : AppCompatActivity() {
             getString(R.string.otros)
         )
 
-        // Adaptadores para los spinners
-        val adapterMes = ArrayAdapter(this, android.R.layout.simple_spinner_item, meses)
-        adapterMes.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinner_mes.adapter = adapterMes
-        spinner_mes.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            @RequiresApi(Build.VERSION_CODES.O)
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-        }
 
         val adapterCategoria = ArrayAdapter(this, android.R.layout.simple_spinner_item, categorias)
         adapterCategoria.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -287,7 +276,7 @@ class GraficasActivity : AppCompatActivity() {
                         "Ingreso" -> ingresosAlimentos += gasto.cantidad
                     }
                 }
-                "TRANSPORTE" -> {
+                "TRANSPORTES" -> {
                     when (gasto.tipoGasto) {
                         "Gasto" -> transporte += gasto.cantidad
                         "Ingreso" -> ingresosTransporte += gasto.cantidad
