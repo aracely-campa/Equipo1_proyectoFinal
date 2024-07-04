@@ -1,49 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="10dp"
-    android:padding="10dp"
-    android:background="@drawable/transaccion_background">
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tv_categoria"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/categoria_item"/>
-
-        <TextView
-            android:id="@+id/tv_cantidad"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/cantidad_item"/>
-
-        <TextView
-            android:id="@+id/tv_descripcion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/descripcion_item"/>
-    </LinearLayout>
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp">
 
     <TextView
-        android:id="@+id/fecha"
+        android:id="@+id/tv_categoria"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/fecha_item"/>
+        android:text="Categoría"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_cantidad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cantidad" />
+
+    <TextView
+        android:id="@+id/tv_descripcion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Descripción" />
+
+    <TextView
+        android:id="@+id/tv_fecha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fecha" />
+
+    <TextView
+        android:id="@+id/tv_tipo_gasto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tipo de Gasto" />
 
     <Button
-        android:id="@+id/btn_eliminar"
+        android:id="@+id/btn_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/eliminar_item"
-        android:backgroundTint="@color/azul_claro"
-        android:textColor="@color/white"/>
-
+        android:text="Eliminar" />
 </LinearLayout>

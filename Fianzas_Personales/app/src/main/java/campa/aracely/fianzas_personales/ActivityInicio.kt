@@ -19,7 +19,6 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 
-
 class ActivityInicio : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var drawerLayout: DrawerLayout
@@ -29,7 +28,6 @@ class ActivityInicio : AppCompatActivity(), NavigationView.OnNavigationItemSelec
     private lateinit var firestore: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
     private var listenerRegistration: ListenerRegistration? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,40 +50,51 @@ class ActivityInicio : AppCompatActivity(), NavigationView.OnNavigationItemSelec
 
     private fun cargarTransacciones() {
         val currentUser: FirebaseUser? = auth.currentUser
-        if(currentUser != null) {
+        if (currentUser != null) {
             val userId = currentUser.uid
-            val transaccionRef = firestore.collection("gastos")
+            val transaccionRef = firestore.collection("users").document(userId)
+                .collection("transacciones")
 
-            listenerRegistration = transaccionRef.addSnapshotListener{ snapshot, error ->
-                if(error != null) {
+            listenerRegistration = transaccionRef.addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    Toast.makeText(this, "Error al cargar transacciones: ${error.message}", Toast.LENGTH_SHORT).show()
                     return@addSnapshotListener
                 }
 
-                if(snapshot != null && !snapshot.isEmpty) {
-                    for(document in snapshot.documents) {
-                        val transaccion = document.toObject(Transaccion::class.java)
-                        if(transaccion != null) {
+                if (snapshot != null && !snapshot.isEmpty) {
+                    transacciones.clear()
+                    for (document in snapshot.documents) {
+                        var transaccion = document.toObject(Transaccion::class.java)
+                        if (transaccion != null) {
+                            transaccion.id = document.id
                             transacciones.add(transaccion)
                         }
                     }
+                    adapter.notifyDataSetChanged()
                 }
             }
         } else {
-            //val intent = Intent(this, Activity_Login::class.java)
-            //startActivity(intent)
-            //finish()
+            Toast.makeText(this, "Usuario no autenticado", Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun eliminarTransaccion(transaccion: Transaccion) {
-        firestore.collection("transacciones").document().delete()
-            .addOnSuccessListener {
-                transacciones.remove(transaccion)
-                adapter.notifyDataSetChanged()
-            }
-            .addOnFailureListener {
-                Log.e("FireStoreDeletionError", "Error deleting transaction:")
-            }
+        val currentUser: FirebaseUser? = auth.currentUser
+        if (currentUser != null) {
+            val userId = currentUser.uid
+            firestore.collection("users").document(userId)
+                .collection("transacciones").document(transaccion.id)
+                .delete()
+                .addOnSuccessListener {
+                    transacciones.remove(transaccion)
+                    adapter.notifyDataSetChanged()
+                    Toast.makeText(this, "Transacción eliminada", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener { e ->
+                    Log.e("FireStoreDeletionError", "Error al eliminar transacción: ${e.message}")
+                    Toast.makeText(this, "Error al eliminar transacción: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+        }
     }
 
     private fun inicializarDrawer() {
@@ -124,5 +133,10 @@ class ActivityInicio : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         } else {
             super.onBackPressed()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        listenerRegistration?.remove()
     }
 }

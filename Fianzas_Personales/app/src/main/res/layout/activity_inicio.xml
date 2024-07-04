@@ -15,8 +15,8 @@
 
         <ImageButton
             android:id="@+id/btn_open_drawer"
-            android:layout_width="41dp"
-            android:layout_height="41dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:layout_margin="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
@@ -78,18 +78,10 @@
                 android:id="@+id/btn_presupuesto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/azul_claro"
                 android:text="@string/btn_presupuesto"
-                android:backgroundTint="@color/azul_claro"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white" />
 
-            <Button
-                android:id="@+id/btn_nueva"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:text="@string/btn_nueva"
-                android:backgroundTint="@color/azul_claro"
-                android:textColor="@color/white"/>
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -101,7 +93,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView
