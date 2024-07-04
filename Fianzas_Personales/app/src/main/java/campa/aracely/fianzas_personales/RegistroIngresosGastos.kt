@@ -48,7 +48,7 @@ class RegistroIngresosGastos : AppCompatActivity() {
     }
 
     private fun inicializarVistas() {
-        etFechaNacimiento = findViewById(R.id.et_fecha_nacimiento)
+        etFechaNacimiento = findViewById(R.id.et_fecha_ingreso)
         edCantidad = findViewById(R.id.ed_cantidad_ingreso_gasto)
         actvCategoria = findViewById(R.id.ed_categoria)
         tipoIngresoGasto = findViewById(R.id.ed_tipo_gasto)
