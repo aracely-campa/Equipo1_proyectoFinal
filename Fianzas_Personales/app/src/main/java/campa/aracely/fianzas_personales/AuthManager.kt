@@ -5,7 +5,7 @@ import com.google.firebase.auth.FirebaseUser
 
 object AuthManager {
 
-    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
+    val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
     var currentUser: FirebaseUser? = auth.currentUser
 

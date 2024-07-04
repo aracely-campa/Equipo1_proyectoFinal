@@ -7,11 +7,12 @@ import android.graphics.drawable.Drawable
 import androidx.core.content.ContextCompat
 import campa.aracely.fianzas_personales.R
 import campa.aracely.fianzas_personales.utilities.Gastos
+import campa.aracely.fianzas_personales.utilities.Transaccion
 import kotlin.math.cos
 import kotlin.math.min
 import kotlin.math.sin
 
-class CustomCircleDrawable(context: Context, gastos: ArrayList<Gastos>) : Drawable() {
+class CustomCircleDrawable(context: Context, gastos: MutableList<Transaccion>) : Drawable() {
 
     private var grosorMetrica: Int = 0
     private var context: Context? = context
