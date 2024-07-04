@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="categoria_item">Categoria</string>
+    <string name="cantidad_item">Cantidad</string>
+    <string name="descripcion_item">Descripcion</string>
+    <string name="fecha_item">Fecha</string>
+    <string name="eliminar_item">Eliminar</string>
+</resources>
