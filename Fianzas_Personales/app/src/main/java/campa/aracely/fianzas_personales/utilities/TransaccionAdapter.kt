@@ -1,41 +1,47 @@
-package campa.aracely.fianzas_personales
+package campa.aracely.fianzas_personales.utilities
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
 import android.widget.TextView
-import campa.aracely.fianzas_personales.utilities.Transaccion
+import androidx.recyclerview.widget.RecyclerView
+import campa.aracely.fianzas_personales.R
+import java.text.SimpleDateFormat
+import java.util.Locale
 
-class TransaccionAdapter(private val context: Context, private val transacciones: List<Transaccion>) : BaseAdapter() {
+class TransaccionAdapter(
+    private val transacciones: List<Transaccion>,
+    private val onDeleteClick: (Transaccion) -> Unit
+) : RecyclerView.Adapter<TransaccionAdapter.TransaccionViewHolder>() {
 
-    override fun getCount(): Int = transacciones.size
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransaccionViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_transaccion, parent, false)
+        return TransaccionViewHolder(view)
+    }
 
-    override fun getItem(position: Int): Any = transacciones[position]
-
-    override fun getItemId(position: Int): Long = position.toLong()
-
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        val view: View
-        if (convertView == null) {
-            view = LayoutInflater.from(context).inflate(R.layout.item_transaccion, parent, false)
-        } else {
-            view = convertView
+    override fun onBindViewHolder(holder: TransaccionViewHolder, position: Int) {
+        val transaccion = transacciones[position]
+        holder.bind(transaccion)
+        holder.itemView.findViewById<View>(R.id.btn_delete).setOnClickListener {
+            onDeleteClick(transaccion)
         }
+    }
 
-        val transaccion = getItem(position) as Transaccion
+    override fun getItemCount(): Int = transacciones.size
 
-        val tvCategoria = view.findViewById<TextView>(R.id.tv_categoria)
-        val tvFecha = view.findViewById<TextView>(R.id.tv_fecha)
-        val tvDescripcion = view.findViewById<TextView>(R.id.tv_descripcion)
-        val tvTipo = view.findViewById<TextView>(R.id.tv_tipo)
+    class TransaccionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val categoria: TextView = itemView.findViewById(R.id.tv_categoria)
+        private val cantidad: TextView = itemView.findViewById(R.id.tv_cantidad)
+        private val descripcion: TextView = itemView.findViewById(R.id.tv_descripcion)
+        private val fecha: TextView = itemView.findViewById(R.id.tv_fecha)
+        private val tipoGasto: TextView = itemView.findViewById(R.id.tv_tipo_gasto)
 
-        tvCategoria.text = transaccion.categoria
-        tvFecha.text = transaccion.fecha
-        tvDescripcion.text = transaccion.descripcion
-        tvTipo.text = transaccion.tipo
-
-        return view
+        fun bind(transaccion: Transaccion) {
+            categoria.text = transaccion.categoria
+            cantidad.text = transaccion.cantidad.toString()
+            descripcion.text = transaccion.descripcion
+            fecha.text = transaccion.fecha
+            tipoGasto.text = transaccion.tipoGasto
+        }
     }
 }

@@ -1,9 +1,10 @@
 package campa.aracely.fianzas_personales.utilities
 
 data class Transaccion(
-    val cantidad: Double,
-    val categoria: String,
-    val tipo: String,
-    val fecha: String,
-    val descripcion: String
+    var id: String = "",
+    val categoria: String = "",
+    val cantidad: Double = 0.0,
+    val descripcion: String = "",
+    val fecha: String = "",
+    val tipoGasto: String = ""
 )
