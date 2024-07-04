@@ -18,18 +18,17 @@ class CustomCircleDrawable(context: Context, private val data: List<Triple<Float
     override fun draw(canvas: Canvas) {
         val ancho = canvas.width
         val alto = canvas.height
-        val radius = min(ancho, alto) / 2.5f
+        val radius = (min(ancho, alto) / 2.5f) - grosorMetrica
         val centerX = ancho / 2f
         val centerY = alto / 2f
 
-        // Dibujar fondo del círculo completo
+
         val fondo = Paint().apply {
             style = Paint.Style.FILL
             color = ContextCompat.getColor(context, R.color.black)
         }
         canvas.drawCircle(centerX, centerY, radius, fondo)
 
-        // Dibujar secciones de la gráfica
         var anguloInicio = 0.0f
         for ((porcentaje, color, categoria) in data) {
             if (porcentaje == 0.0f) continue  // Saltar sección si el valor es 0

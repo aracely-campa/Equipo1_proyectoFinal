@@ -13,24 +13,21 @@ import androidx.core.content.ContextCompat
 import campa.aracely.fianzas_personales.utilities.Transaccion
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 class GraficasActivity : AppCompatActivity() {
     private var lista = mutableListOf<Transaccion>()
-    var alimentos = 0.0F
-    var transporte = 0.0F
-    var compras = 0.0F
-    var facturas = 0.0F
-    var otros = 0.0F
+    private var alimentos = 0.0F
+    private var transporte = 0.0F
+    private var compras = 0.0F
+    private var facturas = 0.0F
+    private var otros = 0.0F
     private lateinit var auth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
 
-    lateinit var graph: View
-    lateinit var spinner_categoria: Spinner
-    lateinit var spinner_mes: Spinner
-    lateinit var textoSinDatos: View
-
+    private lateinit var graph: View
+    private lateinit var spinner_categoria: Spinner
+    private lateinit var spinner_mes: Spinner
+    private lateinit var textoSinDatos: View
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,15 +48,9 @@ class GraficasActivity : AppCompatActivity() {
         spinner_mes = findViewById(R.id.spinner_mes)
         graph = findViewById(R.id.graph)
 
-        // Configurar spinners (meses y categorías)
-        configurarSpinners()
 
-        // Obtener datos de Firestore
+        configurarSpinners()
         obtenerDatosDeFirestore()
-        extraerDatos()
-        actualizarTextViews(lista)
-        // Actualizar gráfica inicial
-        actualizarGrafica()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -70,9 +61,10 @@ class GraficasActivity : AppCompatActivity() {
                 .collection("transacciones")
                 .get()
                 .addOnSuccessListener { documents ->
+                    lista.clear()
                     for (document in documents) {
                         val transaccion = document.toObject(Transaccion::class.java)
-                         transaccion.id = document.id
+                        transaccion.id = document.id
                         lista.add(transaccion)
                     }
                     // Extraer datos y actualizar gráfica
@@ -85,7 +77,7 @@ class GraficasActivity : AppCompatActivity() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun extraerDatos() {
+    private fun extraerDatos() {
         // Limpia los totales antes de recalcular
         alimentos = 0.0F
         transporte = 0.0F
@@ -93,7 +85,7 @@ class GraficasActivity : AppCompatActivity() {
         facturas = 0.0F
         otros = 0.0F
 
-        // Variables para sumar los ingresos
+        // Variables para sumar los ingresos y gastos por categoría
         var ingresosAlimentos = 0.0F
         var ingresosTransporte = 0.0F
         var ingresosCompras = 0.0F
@@ -105,31 +97,31 @@ class GraficasActivity : AppCompatActivity() {
             when (gasto.categoria) {
                 "ALIMENTOS" -> {
                     when (gasto.tipoGasto) {
-                        "Gasto" -> alimentos += -gasto.cantidad
+                        "Gasto" -> alimentos += gasto.cantidad
                         "Ingreso" -> ingresosAlimentos += gasto.cantidad
                     }
                 }
                 "TRANSPORTE" -> {
                     when (gasto.tipoGasto) {
-                        "Gasto" -> transporte += -gasto.cantidad
+                        "Gasto" -> transporte += gasto.cantidad
                         "Ingreso" -> ingresosTransporte += gasto.cantidad
                     }
                 }
                 "COMPRAS" -> {
                     when (gasto.tipoGasto) {
-                        "Gasto" -> compras += -gasto.cantidad
+                        "Gasto" -> compras += gasto.cantidad
                         "Ingreso" -> ingresosCompras += gasto.cantidad
                     }
                 }
                 "FACTURAS" -> {
                     when (gasto.tipoGasto) {
-                        "Gasto" -> facturas += -gasto.cantidad
+                        "Gasto" -> facturas += gasto.cantidad
                         "Ingreso" -> ingresosFacturas += gasto.cantidad
                     }
                 }
                 "OTROS" -> {
                     when (gasto.tipoGasto) {
-                        "Gasto" -> otros += -gasto.cantidad
+                        "Gasto" -> otros += gasto.cantidad
                         "Ingreso" -> ingresosOtros += gasto.cantidad
                     }
                 }
@@ -137,11 +129,11 @@ class GraficasActivity : AppCompatActivity() {
         }
 
         // Restar los ingresos de los gastos correspondientes
-        alimentos -= ingresosAlimentos
-        transporte -= ingresosTransporte
-        compras -= ingresosCompras
-        facturas -= ingresosFacturas
-        otros -= ingresosOtros
+        alimentos = ingresosAlimentos - alimentos
+        transporte = ingresosTransporte - transporte
+        compras = ingresosCompras - compras
+        facturas = ingresosFacturas - facturas
+        otros = ingresosOtros - otros
 
         // Actualizar la gráfica si hay datos, o mostrar el mensaje si no hay datos
         if (lista.isEmpty()) {
@@ -149,43 +141,28 @@ class GraficasActivity : AppCompatActivity() {
             graph.visibility = View.GONE
             textoSinDatos.visibility = View.VISIBLE
         } else {
-            // Actualizar los montos y la gráfica con los datos actuales
+
             actualizarGrafica()
             graph.visibility = View.VISIBLE
             textoSinDatos.visibility = View.GONE
         }
+
+        actualizarTextViews()
     }
 
-    fun actualizarTextViews(listaFiltrada: List<Transaccion>) {
-        var montoAlimentos = 0.0F
-        var montoTransporte = 0.0F
-        var montoCompras = 0.0F
-        var montoFacturas = 0.0F
-        var montoOtros = 0.0F
-
-        // Sumar los montos según la categoría
-        for (gasto in listaFiltrada) {
-            when (gasto.categoria) {
-                "ALIMENTOS" -> montoAlimentos += gasto.cantidad
-                "TRANSPORTE" -> montoTransporte += gasto.cantidad
-                "COMPRAS" -> montoCompras += gasto.cantidad
-                "FACTURAS" -> montoFacturas += gasto.cantidad
-                "OTROS" -> montoOtros += gasto.cantidad
-            }
-        }
-
-        // Actualizar los TextViews con los nuevos montos
+    private fun actualizarTextViews() {
+        // Actualizar los TextViews con los montos actuales
         val montoAlimentosTextView: TextView = findViewById(R.id.textoAlimentos)
         val montoTransporteTextView: TextView = findViewById(R.id.textoTransporte)
         val montoComprasTextView: TextView = findViewById(R.id.textoCompras)
         val montoFacturasTextView: TextView = findViewById(R.id.textoFacturas)
         val montoOtrosTextView: TextView = findViewById(R.id.textoOtros)
 
-        montoAlimentosTextView.text = "$montoAlimentos"
-        montoTransporteTextView.text = "$montoTransporte"
-        montoComprasTextView.text = "$montoCompras"
-        montoFacturasTextView.text = "$montoFacturas"
-        montoOtrosTextView.text = "$montoOtros"
+        montoAlimentosTextView.text = String.format("%.2f", alimentos)
+        montoTransporteTextView.text = String.format("%.2f", transporte)
+        montoComprasTextView.text = String.format("%.2f", compras)
+        montoFacturasTextView.text = String.format("%.2f", facturas)
+        montoOtrosTextView.text = String.format("%.2f", otros)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -220,6 +197,7 @@ class GraficasActivity : AppCompatActivity() {
     }
 
     private fun configurarSpinners() {
+        // Configurar los spinners (meses y categorías)
         val meses = listOf(
             "---",
             getString(R.string.enero),
@@ -235,6 +213,7 @@ class GraficasActivity : AppCompatActivity() {
             getString(R.string.noviembre),
             getString(R.string.diciembre)
         )
+
         val categorias = listOf(
             "---",
             getString(R.string.alimentos),
@@ -244,14 +223,13 @@ class GraficasActivity : AppCompatActivity() {
             getString(R.string.otros)
         )
 
+        // Adaptadores para los spinners
         val adapterMes = ArrayAdapter(this, android.R.layout.simple_spinner_item, meses)
         adapterMes.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner_mes.adapter = adapterMes
         spinner_mes.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             @RequiresApi(Build.VERSION_CODES.O)
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val mesSeleccionado = meses[position]
-
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -263,6 +241,7 @@ class GraficasActivity : AppCompatActivity() {
         spinner_categoria.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             @RequiresApi(Build.VERSION_CODES.O)
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, id: Long) {
+
                 filtrarCategoria()
             }
 
@@ -271,20 +250,92 @@ class GraficasActivity : AppCompatActivity() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun filtrarCategoria() {
-        val categoriaSeleccionada = spinner_categoria.selectedItem.toString()
-        if (categoriaSeleccionada == "---") {
-            obtenerDatosDeFirestore()
-            return
+    private fun filtrarCategoria() {
+        val categoriaSeleccionada = spinner_categoria.selectedItem.toString().toUpperCase()
+        val listaFiltrada = if (categoriaSeleccionada == "---") {
+            lista
+        } else {
+            lista.filter { it.categoria.equals(categoriaSeleccionada, ignoreCase = true) }  // Filtrar por categoría
         }
 
-        val listaFiltrada = lista.filter {
-            it.categoria == categoriaSeleccionada
+        // Actualizar gráfica y textos con los datos filtrados
+        extraerDatosFiltrados(listaFiltrada)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun extraerDatosFiltrados(listaFiltrada: List<Transaccion>) {
+        // Limpia los totales antes de recalcular
+        alimentos = 0.0F
+        transporte = 0.0F
+        compras = 0.0F
+        facturas = 0.0F
+        otros = 0.0F
+
+        // Variables para sumar los ingresos y gastos por categoría
+        var ingresosAlimentos = 0.0F
+        var ingresosTransporte = 0.0F
+        var ingresosCompras = 0.0F
+        var ingresosFacturas = 0.0F
+        var ingresosOtros = 0.0F
+
+        // Recorre la lista filtrada y suma los montos correspondientes
+        for (gasto in listaFiltrada) {
+            when (gasto.categoria) {
+                "ALIMENTOS" -> {
+                    when (gasto.tipoGasto) {
+                        "Gasto" -> alimentos += gasto.cantidad
+                        "Ingreso" -> ingresosAlimentos += gasto.cantidad
+                    }
+                }
+                "TRANSPORTE" -> {
+                    when (gasto.tipoGasto) {
+                        "Gasto" -> transporte += gasto.cantidad
+                        "Ingreso" -> ingresosTransporte += gasto.cantidad
+                    }
+                }
+                "COMPRAS" -> {
+                    when (gasto.tipoGasto) {
+                        "Gasto" -> compras += gasto.cantidad
+                        "Ingreso" -> ingresosCompras += gasto.cantidad
+                    }
+                }
+                "FACTURAS" -> {
+                    when (gasto.tipoGasto) {
+                        "Gasto" -> facturas += gasto.cantidad
+                        "Ingreso" -> ingresosFacturas += gasto.cantidad
+                    }
+                }
+                "OTROS" -> {
+                    when (gasto.tipoGasto) {
+                        "Gasto" -> otros += gasto.cantidad
+                        "Ingreso" -> ingresosOtros += gasto.cantidad
+                    }
+                }
+            }
         }
 
-        lista.clear()
-        lista.addAll(listaFiltrada)
+        // Restar los ingresos de los gastos correspondientes
+        alimentos = ingresosAlimentos - alimentos
+        transporte = ingresosTransporte - transporte
+        compras = ingresosCompras - compras
+        facturas = ingresosFacturas - facturas
+        otros = ingresosOtros - otros
 
-        actualizarGrafica()
+        if (listaFiltrada.isEmpty()) {
+
+            graph.visibility = View.GONE
+            textoSinDatos.visibility = View.VISIBLE
+        } else {
+            actualizarGrafica()
+            graph.visibility = View.VISIBLE
+            textoSinDatos.visibility = View.GONE
+        }
+
+        actualizarTextViews()
+    }
+
+    companion object {
+
+        val listaCategorias = listOf("ALIMENTOS", "TRANSPORTE", "COMPRAS", "FACTURAS", "OTROS")
     }
 }
